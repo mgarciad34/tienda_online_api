@@ -28,3 +28,6 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::post('/categorias', [AdminCategoriasController::class, 'crearCategoria']);
 Route::get('/categorias', [AdminCategoriasController::class, 'obtenerCategorias']);
 Route::get('/categorias/{id}', [AdminCategoriasController::class, 'obtenerCategoriaId']);
+Route::put('/categorias/{id}', [AdminCategoriasController::class, 'actualizarCategoria']);
+Route::delete('/categorias/{id}', [AdminCategoriasController::class, 'eliminarCategoria']);
+
