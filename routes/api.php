@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminCategoriasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,11 +15,6 @@ use App\Http\Controllers\AuthController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-
-/*Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-*/
 Route::post('/registro', [AuthController::class, 'crearUsuario']);
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -27,3 +23,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 
+//Rutas Administrador
+
+Route::post('/categorias', [AdminCategoriasController::class, 'crearCategoria']);
+Route::get('/categorias', [AdminCategoriasController::class, 'obtenerCategorias']);
+Route::get('/categorias/{id}', [AdminCategoriasController::class, 'obtenerCategoriaId']);
