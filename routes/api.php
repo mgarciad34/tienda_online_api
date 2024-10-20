@@ -24,10 +24,11 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 //Rutas Administrador
-
-Route::post('/categorias', [AdminCategoriasController::class, 'crearCategoria']);
-Route::get('/categorias', [AdminCategoriasController::class, 'obtenerCategorias']);
-Route::get('/categorias/{id}', [AdminCategoriasController::class, 'obtenerCategoriaId']);
-Route::put('/categorias/{id}', [AdminCategoriasController::class, 'actualizarCategoria']);
-Route::delete('/categorias/{id}', [AdminCategoriasController::class, 'eliminarCategoria']);
+Route::middleware('verificar_rol_admin')->group(function () {
+    Route::post('/categorias', [AdminCategoriasController::class, 'crearCategoria']);
+    Route::get('/categorias', [AdminCategoriasController::class, 'obtenerCategorias']);
+    Route::get('/categorias/{id}', [AdminCategoriasController::class, 'obtenerCategoriaId']);
+    Route::put('/categorias/{id}', [AdminCategoriasController::class, 'actualizarCategoria']);
+    Route::delete('/categorias/{id}', [AdminCategoriasController::class, 'eliminarCategoria']);
+});
 

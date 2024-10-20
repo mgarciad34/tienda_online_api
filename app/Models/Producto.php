@@ -12,8 +12,11 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Producto
- * 
+ *
  * @property int $id
+ * @property string $img1
+ * @property string $img2
+ * @property string $img3
  * @property string $nombre
  * @property string $descripcion
  * @property float $precio
@@ -21,7 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property int $categoria_id
- * 
+ *
  * @property Categoria $categoria
  * @property Collection|CestaDetalle[] $cesta_detalles
  *
@@ -39,6 +42,9 @@ class Producto extends Model
 
 	protected $fillable = [
 		'nombre',
+        'img1',
+        'img2',
+        'img3',
 		'descripcion',
 		'precio',
 		'existencias',
