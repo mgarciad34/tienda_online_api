@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Producto;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Log;
 
 class ProductosController extends Controller
 {
@@ -37,6 +35,39 @@ class ProductosController extends Controller
             'productId' => $producto->id
         ], 200);
     }
+
+    public function obtenerProductos(Request $request)
+    {
+        try {
+            $productos = Producto::all();
+
+            return response()->json([
+                'mensaje' => 'Productos obtenidos',
+                'productos' => $productos,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Ocurrió un error al obtener los productos: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function obtenerProductosNombre($nombre)
+    {
+        try {
+            $productos = $nombre ? Producto::where('nombre', 'like', '%' . $nombre . '%')->get() : Producto::all();
+
+            return response()->json([
+                'mensaje' => 'Productos obtenidos',
+                'productos' => $productos,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Ocurrió un error al obtener los productos: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
 
 
 }
