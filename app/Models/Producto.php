@@ -14,10 +14,10 @@ use Illuminate\Database\Eloquent\Model;
  * Class Producto
  *
  * @property int $id
+ * @property string $nombre
  * @property string $img1
  * @property string $img2
  * @property string $img3
- * @property string $nombre
  * @property string $descripcion
  * @property float $precio
  * @property int $existencias
@@ -34,23 +34,22 @@ class Producto extends Model
 {
 	protected $table = 'productos';
 
-	protected $casts = [
-		'precio' => 'float',
-		'existencias' => 'int',
-		'categoria_id' => 'int'
-	];
+    protected $casts = [
+        'precio' => 'float',
+        'existencias' => 'int',
+        'categoria_id' => 'int'
+    ];
 
-	protected $fillable = [
-		'nombre',
+    protected $fillable = [
+        'nombre',
         'img1',
         'img2',
         'img3',
-		'descripcion',
-		'precio',
-		'existencias',
-		'categoria_id'
-	];
-
+        'descripcion',
+        'precio',
+        'existencias',
+        'categoria_id'
+    ];
 	public function categoria()
 	{
 		return $this->belongsTo(Categoria::class);
@@ -60,4 +59,5 @@ class Producto extends Model
 	{
 		return $this->hasMany(CestaDetalle::class);
 	}
+
 }
