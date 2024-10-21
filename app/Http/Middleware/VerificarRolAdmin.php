@@ -3,24 +3,22 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Usuario;
 
 class VerificarRolAdmin
 {
-    public function handle(Request $request, Closure $next, string $rol)
+    public function handle($request, Closure $next)
     {
-        $usuario = Auth::guard('sanctum')->user();
+/*        if (!Auth::check()) {
+            return redirect('/login');
+        }*/
 
-        if (!$usuario) {
-            return response()->json(['error' => 'No autorizado'], 401);
+        $usuario = Auth::user();
+
+        if ($usuario->rol === 'Administrador') {
+            return $next($request);
         }
 
-        if ($usuario->rol !== $rol) {
-            return response()->json(['error' => 'No tienes permiso para acceder a esta página'], 403);
-        }
-
-        return $next($request);
+        abort(403, 'No tienes permiso para acceder como administrador.');
     }
 }

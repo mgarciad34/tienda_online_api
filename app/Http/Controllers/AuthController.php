@@ -43,33 +43,33 @@ class AuthController extends Controller
 
 
     public function login(Request $request)
-{
-    $validator = Validator::make($request->all(), [
-        'email' => 'required|string|email',
-        'contrasena' => 'required|string'
-    ]);
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|string|email',
+            'contrasena' => 'required|string'
+        ]);
 
-    if ($validator->fails()) {
-        return response()->json(['errors' => $validator->errors()], 422);
-    }
-
-    try {
-        $usuario = Usuario::where('email', $request->email)->first();
-
-        if (!$usuario || !Hash::check($request->contrasena, $usuario->contrasena)) {
-            throw new \Exception('Credenciales inválidas');
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $token = $usuario->createToken('token_name')->plainTextToken;
+        try {
+            $usuario = Usuario::where('email', $request->email)->first();
 
-        return response()->json(['message' => 'Usuario autenticado', 'token' => $token], 200);
-    } catch (\Exception $e) {
-        if ($e instanceof \Illuminate\Auth\AuthenticationException) {
-            return response()->json(['error' => 'Credenciales inválidas'], 401);
+            if (!$usuario || !Hash::check($request->contrasena, $usuario->contrasena)) {
+                throw new \Exception('Credenciales inválidas');
+            }
+
+            $token = $usuario->createToken('token_name')->plainTextToken;
+
+            return response()->json(['message' => 'Usuario autenticado', 'token' => $token], 200);
+        } catch (\Exception $e) {
+            if ($e instanceof \Illuminate\Auth\AuthenticationException) {
+                return response()->json(['error' => 'Credenciales inválidas'], 401);
+            }
+            return response()->json(['error' => 'Error del servidor: ' . $e->getMessage()], 500);
         }
-        return response()->json(['error' => 'Error del servidor: ' . $e->getMessage()], 500);
     }
-}
 
 
 public function logout(Request $request)
