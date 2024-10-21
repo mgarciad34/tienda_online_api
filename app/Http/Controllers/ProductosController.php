@@ -68,6 +68,43 @@ class ProductosController extends Controller
         }
     }
 
+    public function actualizarProducto(Request $request, $id)
+{
+    try {
+        $validatedData = $request->validate([
+            'nombre' => 'sometimes|string|max:255',
+            'img1' => 'sometimes|string',
+            'img2' => 'nullable|string',
+            'img3' => 'nullable|string',
+            'descripcion' => 'sometimes|string|max:1000',
+            'precio' => 'sometimes|numeric',
+            'existencias' => 'sometimes|integer|min:0',
+            'categoria_id' => 'sometimes|integer|exists:categorias,id'
+        ]);
+
+        foreach (['img1', 'img2', 'img3'] as $imgAttribute) {
+            if (!empty($validatedData[$imgAttribute]) && !str_starts_with($validatedData[$imgAttribute], 'data:image/')) {
+                $validatedData[$imgAttribute] = base64_encode($validatedData[$imgAttribute]);
+            }
+        }
+
+        $producto = Producto::findOrFail($id);
+
+        $producto->update($validatedData);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'El producto ha sido actualizado exitosamente',
+            'productId' => $producto->id
+        ], 200);
+    } catch (\Exception $e) {
+        return response()->json([
+            'error' => 'Ocurrió un error al actualizar el producto: ' . $e->getMessage(),
+        ], 500);
+    }
+}
+
+
     public function eliminarProducto(Request $request, $id)
     {
         try {
