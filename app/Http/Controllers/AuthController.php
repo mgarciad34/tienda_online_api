@@ -60,9 +60,22 @@ class AuthController extends Controller
                 throw new \Exception('Credenciales inválidas');
             }
 
-            $token = $usuario->createToken('token_name')->plainTextToken;
+            if ($usuario->rol === 'administrador') {
+                $token = $usuario->createToken('token_admin')->plainTextToken;
+                return response()->json([
+                    'message' => 'Usuario autenticado como administrador',
+                    'token' => $token,
+                    'rol' => 'Administrador'
+                ], 200);
+            } else if ($usuario->rol === 'usuario') {
+                $token = $usuario->createToken('token_usuario')->plainTextToken;
+                return response()->json([
+                    'message' => 'Usuario autenticado como usuario',
+                    'token' => $token,
+                    'rol' => 'Usuario'
+                ], 200);
+            }
 
-            return response()->json(['message' => 'Usuario autenticado', 'token' => $token], 200);
         } catch (\Exception $e) {
             if ($e instanceof \Illuminate\Auth\AuthenticationException) {
                 return response()->json(['error' => 'Credenciales inválidas'], 401);
@@ -72,7 +85,10 @@ class AuthController extends Controller
     }
 
 
-public function logout(Request $request)
+
+
+
+    public function logout(Request $request)
     {
         $request->user()->tokens()->delete();
 

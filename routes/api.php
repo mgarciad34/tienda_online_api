@@ -24,7 +24,7 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 //Rutas Administrador
-Route::group(['middleware' => 'verificar_rol_admin'], function () {
+Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
     Route::post('/categorias', [AdminCategoriasController::class, 'crearCategoria']);
     Route::get('/categorias', [AdminCategoriasController::class, 'obtenerCategorias']);
     Route::get('/categorias/{id}', [AdminCategoriasController::class, 'obtenerCategoriaId']);

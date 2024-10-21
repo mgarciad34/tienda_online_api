@@ -9,16 +9,16 @@ class VerificarRolAdmin
 {
     public function handle($request, Closure $next)
     {
-/*        if (!Auth::check()) {
-            return redirect('/login');
-        }*/
-
-        $usuario = Auth::user();
-
-        if ($usuario->rol === 'Administrador') {
-            return $next($request);
+        if (!Auth::check()) {
+            return response()->json(['error' => 'No estás autenticado'], 401);
         }
 
-        abort(403, 'No tienes permiso para acceder como administrador.');
+        $usuario = Auth::usuario();
+
+        if ($usuario->rol !== 'administrador') {
+            return response()->json(['error' => 'Solo los administradores tienen acceso'], 403);
+        }
+
+        return $next($request);
     }
 }
