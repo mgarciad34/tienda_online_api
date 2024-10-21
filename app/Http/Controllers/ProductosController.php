@@ -68,6 +68,21 @@ class ProductosController extends Controller
         }
     }
 
+    public function eliminarProducto(Request $request, $id)
+    {
+        try {
+            $producto = Producto::findOrFail($id);
 
+            $producto->delete();
+
+            return response()->json([
+                'mensaje' => 'El producto ha sido eliminado exitosamente',
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Ocurrió un error al eliminar el producto: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
 
 }

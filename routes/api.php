@@ -34,3 +34,4 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::post('/productos', [ProductosController::class, 'crearProducto']);
 Route::get('/productos', [ProductosController::class, 'obtenerProductos']);
 Route::get('/productos/{nombre}', [ProductosController::class, 'obtenerProductosNombre']);
+Route::delete('/productos/{id}', [ProductosController::class, 'eliminarProducto']);
