@@ -12,15 +12,15 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Cesta
- * 
+ *
  * @property int $id
  * @property int $usuario_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property float $total
  * @property string $estado
- * 
- * @property Usuario $usuario
+ *
+ * @property User $usuario
  * @property Collection|CestaDetalle[] $cesta_detalles
  *
  * @package App\Models
@@ -42,7 +42,7 @@ class Cesta extends Model
 
 	public function usuario()
 	{
-		return $this->belongsTo(Usuario::class);
+		return $this->belongsTo(User::class);
 	}
 
 	public function cesta_detalles()

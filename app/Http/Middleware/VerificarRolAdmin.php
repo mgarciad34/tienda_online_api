@@ -13,7 +13,7 @@ class VerificarRolAdmin
             return response()->json(['error' => 'No estás autenticado'], 401);
         }
 
-        $usuario = Auth::usuario();
+        $usuario = Auth::user();
 
         if ($usuario->rol !== 'administrador') {
             return response()->json(['error' => 'Solo los administradores tienen acceso'], 403);

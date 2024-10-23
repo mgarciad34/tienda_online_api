@@ -17,7 +17,7 @@ return new class extends Migration
             $table->timestamps();
             $table->decimal('total', 10, 2)->default(0.00);
             $table->enum('estado', ['abierta', 'cerrada'])->default('abierta');
-            $table->foreign('usuario_id')->references('id')->on('usuarios')->onDelete('cascade');
+            $table->foreign('usuario_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

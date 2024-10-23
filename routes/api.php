@@ -24,18 +24,21 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 //Rutas Administrador
-Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
+Route::group(['prefix' => '/admin', 'middleware' => ['auth:sanctum', 'admin']], function () {
     Route::post('/categorias', [AdminCategoriasController::class, 'crearCategoria']);
     Route::get('/categorias', [AdminCategoriasController::class, 'obtenerCategorias']);
     Route::get('/categorias/{id}', [AdminCategoriasController::class, 'obtenerCategoriaId']);
     Route::put('/categorias/{id}', [AdminCategoriasController::class, 'actualizarCategoria']);
     Route::delete('/categorias/{id}', [AdminCategoriasController::class, 'eliminarCategoria']);
+
+    // Rutas Productos
+    Route::post('/productos', [ProductosController::class, 'crearProducto']);
+    Route::get('/productos', [ProductosController::class, 'obtenerProductos']);
+    Route::get('/productos/{nombre}', [ProductosController::class, 'obtenerProductosNombre']);
+    Route::put('/productos/{id}', [ProductosController::class, 'actualizarProducto']);
+    Route::delete('/productos/{id}', [ProductosController::class, 'eliminarProducto']);
 });
 
 
-//Rutas Productos
-Route::post('/productos', [ProductosController::class, 'crearProducto']);
-Route::get('/productos', [ProductosController::class, 'obtenerProductos']);
-Route::get('/productos/{nombre}', [ProductosController::class, 'obtenerProductosNombre']);
-Route::put('/productos/{id}', [ProductosController::class, 'actualizarProducto']);
-Route::delete('/productos/{id}', [ProductosController::class, 'eliminarProducto']);
+
+

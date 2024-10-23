@@ -22,10 +22,10 @@ use Laravel\Sanctum\HasApiTokens;
  *
  * @package App\Models
  */
-class Usuario extends Model
+class User extends Model
 {
     use HasApiTokens;
-    protected $table = 'usuarios';
+    protected $table = 'users';
 
     protected $fillable = [
         'nombre',
