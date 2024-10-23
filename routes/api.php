@@ -40,5 +40,7 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth:sanctum', 'admin']], 
 });
 
 
-
-
+//Rutas Administrador
+Route::group(['prefix' => '/usuario', 'middleware' => ['auth:sanctum', 'usuario']], function () {
+    Route::get('/ver/productos', [ProductosController::class, 'obtenerProductos']);
+});

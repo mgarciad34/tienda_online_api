@@ -7,8 +7,13 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
-class VerificarRolAdmin
+class VerificarRolUsuario
 {
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     */
     public function handle($request, Closure $next)
     {
         if (!Auth::check()) {
@@ -17,8 +22,8 @@ class VerificarRolAdmin
 
         $usuario = Auth::user();
 
-        if ($usuario->rol !== 'administrador') {
-            return response()->json(['error' => 'Solo los administradores tienen acceso'], 403);
+        if ($usuario->rol !== 'usuario') {
+            return response()->json(['error' => 'Solo los usuarios tienen acceso'], 403);
         }
 
         return $next($request);
