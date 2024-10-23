@@ -83,5 +83,25 @@ class AdminCategoriasController extends Controller
         }
     }
 
+    public function eliminarCategoria($id)
+    {
+        try {
+            $categoria = Categoria::findOrFail($id);
+
+            $categoria->delete();
+
+            return response()->json([
+                'mensaje' => 'Categoria eliminada con éxito',
+            ], 200);
+        } catch (\ModelNotFoundException $e) {
+            return response()->json([
+                'error' => 'No se encontró la categoría con el ID especificado',
+            ], 404);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Ocurrió un error al eliminar la categoría: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
 
 }
