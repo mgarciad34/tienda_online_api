@@ -65,6 +65,7 @@ class AuthController extends Controller
                 return response()->json([
                     'message' => 'Usuario autenticado como administrador',
                     'token' => $token,
+                    'correo' => $usuario->email,
                     'rol' => 'Administrador'
                 ], 200);
             } else if ($usuario->rol === 'usuario') {
@@ -72,6 +73,7 @@ class AuthController extends Controller
                 return response()->json([
                     'message' => 'Usuario autenticado como usuario',
                     'token' => $token,
+                    'correo' => $usuario->email,
                     'rol' => 'Usuario'
                 ], 200);
             }

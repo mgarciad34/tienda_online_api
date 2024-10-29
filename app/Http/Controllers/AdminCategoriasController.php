@@ -22,20 +22,21 @@ class AdminCategoriasController extends Controller
     }
 
     public function obtenerCategorias(Request $request)
-    {
-        try {
-            $categorias = Categoria::all();
+{
+    try {
+        $categorias = Categoria::select('id', 'nombre')->get();
 
-            return response()->json([
-                'mensaje' => 'Categorías obtenidas',
-                'categorias' => $categorias,
-            ], 200);
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Ocurrió un error al obtener las categorías: ' . $e->getMessage(),
-            ], 500);
-        }
+        return response()->json([
+            'mensaje' => 'Categorías obtenidas',
+            'categorias' => $categorias,
+        ], 200);
+    } catch (\Exception $e) {
+        return response()->json([
+            'error' => 'Ocurrió un error al obtener las categorías: ' . $e->getMessage(),
+        ], 500);
     }
+}
+
 
     public function obtenerCategoriaId($id)
     {

@@ -17,7 +17,7 @@ use App\Http\Controllers\ProductosController;
 */
 Route::post('/registro', [AuthController::class, 'crearUsuario']);
 
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
