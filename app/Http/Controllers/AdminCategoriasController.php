@@ -47,7 +47,7 @@ class AdminCategoriasController extends Controller
                 'mensaje' => 'Categoria obtenida con éxito',
                 'categoria' => $categoria,
             ], 200);
-        } catch (\ModelNotFoundException $e) {
+        } catch (\Exception $e) {
             return response()->json([
                 'error' => 'No se encontró la categoría con el ID especificado',
             ], 404);
@@ -73,7 +73,7 @@ class AdminCategoriasController extends Controller
                 'mensaje' => 'Categoria actualizada con éxito',
                 'categoria' => $categoria,
             ], 200);
-        } catch (\ModelNotFoundException $e) {
+        } catch (\Exception $e) {
             return response()->json([
                 'error' => 'No se encontró la categoría con el ID especificado',
             ], 404);
@@ -94,7 +94,7 @@ class AdminCategoriasController extends Controller
             return response()->json([
                 'mensaje' => 'Categoria eliminada con éxito',
             ], 200);
-        } catch (\ModelNotFoundException $e) {
+        } catch (\Exception $e) {
             return response()->json([
                 'error' => 'No se encontró la categoría con el ID especificado',
             ], 404);
