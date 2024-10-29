@@ -12,7 +12,7 @@ use Laravel\Sanctum\PersonalAccessToken;
 class AuthController extends Controller
 {
 
-    public function crearUsuario(Request $request)
+    public function fncCrearUsuario(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'nombre' => 'required|string|max:255',
@@ -42,7 +42,7 @@ class AuthController extends Controller
     }
 
 
-    public function login(Request $request)
+    public function fncLogin(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email',
@@ -90,7 +90,7 @@ class AuthController extends Controller
 
 
 
-    public function logout(Request $request)
+    public function fncLogout(Request $request)
     {
         $request->user()->tokens()->delete();
 
