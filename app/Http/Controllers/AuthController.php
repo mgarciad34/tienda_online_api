@@ -8,9 +8,17 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\PersonalAccessToken;
+use App\Http\Controllers\UserCestasController;
 
 class AuthController extends Controller
 {
+
+    protected $cestasController;
+    public function __construct(UserCestasController $cestasController)
+    {
+        $this->cestasController = $cestasController;
+    }
+
 
     public function fncCrearUsuario(Request $request)
     {
@@ -35,12 +43,25 @@ class AuthController extends Controller
                 'updated_at' => now(),
             ]);
 
+            try {
+                $data = [
+                    'usuario_id' => $usuario->id,
+                    'total' => 0,
+                    'estado' => 'abierta'
+                ];
+                $request = new \Illuminate\Http\Request();
+                $request->replace($data);
+                $this->cestasController->crearCesta($request);
+            } catch (\Exception $e) {
+                return response()->json(['error' => 'Error al crear cesta: ' . $e->getMessage()], 422);
+            }
+
+
             return response()->json(['message' => 'Usuario creado con éxito', 'usuario' => $usuario], 201);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Error al crear usuario: ' . $e->getMessage()], 422);
         }
     }
-
 
     public function fncLogin(Request $request)
     {
@@ -85,11 +106,6 @@ class AuthController extends Controller
             return response()->json(['error' => 'Error del servidor: ' . $e->getMessage()], 500);
         }
     }
-
-
-
-
-
     public function fncLogout(Request $request)
     {
         $request->user()->tokens()->delete();
