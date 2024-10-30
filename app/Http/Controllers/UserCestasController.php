@@ -22,7 +22,7 @@ class UserCestasController extends Controller
 
         // Return a success response
         return response()->json([
-            'message' => 'Cesta creada con éxito',
+            'message' => 'Producto añadido a la cesta',
             'data' => $cesta,
         ], 201);
     }
