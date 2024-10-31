@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminCategoriasController;
 use App\Http\Controllers\ProductosController;
 use App\Http\Controllers\UserCestasController;
+use App\Http\Controllers\UserDetallesCesta;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -48,4 +49,6 @@ Route::group(['prefix' => '/usuario', 'middleware' => ['auth:sanctum', 'usuario'
     Route::post('/anadir/cesta',[UserCestasController::class, 'anadirCesta']);
     Route::put('/cerrar/cesta/{id}', [UserCestasController::class, 'cerrarCesta']);
     Route::get('/obtener/estado/cesta/{usuarioId}',[UserCestasController::class, 'obtenerEstadoCesta']);
+    Route::post('/agregar/producto', [UserDetallesCesta::class, 'insertarProducto']);
+    Route::put('/actualizar/producto/{id}', [UserDetallesCesta::class, 'actualizarProducto']);
 });
