@@ -1,15 +1,12 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Sanctum\HasApiTokens;
+
 /**
  * Class Usuario
  *
@@ -25,21 +22,20 @@ use Laravel\Sanctum\HasApiTokens;
  *
  * @package App\Models
  */
-class Usuario extends Model
+class User extends Model
 {
-	protected $table = 'usuarios';
-
     use HasApiTokens;
+    protected $table = 'users';
 
-	protected $fillable = [
-		'nombre',
-		'email',
-		'contrasena',
-		'rol'
-	];
+    protected $fillable = [
+        'nombre',
+        'email',
+        'contrasena',
+        'rol'
+    ];
 
-	public function cestas()
-	{
-		return $this->hasMany(Cesta::class);
-	}
+    public function cestas()
+    {
+        return $this->hasMany(Cesta::class);
+    }
 }

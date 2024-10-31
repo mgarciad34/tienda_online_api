@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('productos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
+            $table->binary('img1');
+            $table->binary('img2');
+            $table->binary('img3');
             $table->string('descripcion');
             $table->double('precio');
             $table->integer('existencias');

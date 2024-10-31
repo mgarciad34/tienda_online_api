@@ -14,7 +14,7 @@ class usuariosSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('usuarios')->insert([
+        DB::table('users')->insert([
             'nombre' => 'Administrador',
             'email' => 'administrador@tienda.com',
             'contrasena' => bcrypt('Admintiend@123'),
@@ -26,10 +26,10 @@ class usuariosSeeder extends Seeder
         $faker = Faker::create();
 
         for ($i = 0; $i < 20; $i++) {
-            DB::table('usuarios')->insert([
+            DB::table('users')->insert([
                 'nombre' => $faker->firstName,
                 'email' => $faker->email,
-                'contrasena' => bcrypt('secret'),
+                'contrasena' => bcrypt('1234'),
                 'rol' => 'Usuario',
                 'created_at' => now(),
                 'updated_at' => now(),

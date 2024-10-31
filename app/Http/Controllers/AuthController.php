@@ -3,20 +3,28 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Usuario;
+use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\PersonalAccessToken;
+use App\Http\Controllers\UserCestasController;
 
 class AuthController extends Controller
 {
 
-    public function crearUsuario(Request $request)
+    protected $cestasController;
+    public function __construct(UserCestasController $cestasController)
+    {
+        $this->cestasController = $cestasController;
+    }
+
+
+    public function fncCrearUsuario(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'nombre' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:usuarios',
+            'email' => 'required|string|email|max:255|unique:users',
             'contrasena' => 'required|string|min:8',
             'rol' => 'required|string|in:Administrador,Usuario',
         ]);
@@ -26,7 +34,7 @@ class AuthController extends Controller
         }
 
         try {
-            $usuario = Usuario::create([
+            $usuario = User::create([
                 'nombre' => $request->nombre,
                 'email' => $request->email,
                 'contrasena' => bcrypt($request->contrasena),
@@ -35,44 +43,70 @@ class AuthController extends Controller
                 'updated_at' => now(),
             ]);
 
+            try {
+                $data = [
+                    'usuario_id' => $usuario->id,
+                    'total' => 0,
+                    'estado' => 'abierta'
+                ];
+                $request = new \Illuminate\Http\Request();
+                $request->replace($data);
+                $this->cestasController->crearCesta($request);
+            } catch (\Exception $e) {
+                return response()->json(['error' => 'Error al crear cesta: ' . $e->getMessage()], 422);
+            }
+
+
             return response()->json(['message' => 'Usuario creado con éxito', 'usuario' => $usuario], 201);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Error al crear usuario: ' . $e->getMessage()], 422);
         }
     }
 
+    public function fncLogin(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|string|email',
+            'contrasena' => 'required|string'
+        ]);
 
-    public function login(Request $request)
-{
-    $validator = Validator::make($request->all(), [
-        'email' => 'required|string|email',
-        'contrasena' => 'required|string'
-    ]);
-
-    if ($validator->fails()) {
-        return response()->json(['errors' => $validator->errors()], 422);
-    }
-
-    try {
-        $usuario = Usuario::where('email', $request->email)->first();
-
-        if (!$usuario || !Hash::check($request->contrasena, $usuario->contrasena)) {
-            throw new \Exception('Credenciales inválidas');
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $token = $usuario->createToken('token_name')->plainTextToken;
+        try {
+            $usuario = User::where('email', $request->email)->first();
 
-        return response()->json(['message' => 'Usuario autenticado', 'token' => $token], 200);
-    } catch (\Exception $e) {
-        if ($e instanceof \Illuminate\Auth\AuthenticationException) {
-            return response()->json(['error' => 'Credenciales inválidas'], 401);
+            if (!$usuario || !Hash::check($request->contrasena, $usuario->contrasena)) {
+                throw new \Exception('Credenciales inválidas');
+            }
+
+            if ($usuario->rol === 'administrador') {
+                $token = $usuario->createToken('token_admin')->plainTextToken;
+                return response()->json([
+                    'message' => 'Usuario autenticado como administrador',
+                    'token' => $token,
+                    'correo' => $usuario->email,
+                    'rol' => 'Administrador'
+                ], 200);
+            } else if ($usuario->rol === 'usuario') {
+                $token = $usuario->createToken('token_usuario')->plainTextToken;
+                return response()->json([
+                    'message' => 'Usuario autenticado como usuario',
+                    'token' => $token,
+                    'correo' => $usuario->email,
+                    'rol' => 'Usuario'
+                ], 200);
+            }
+
+        } catch (\Exception $e) {
+            if ($e instanceof \Illuminate\Auth\AuthenticationException) {
+                return response()->json(['error' => 'Credenciales inválidas'], 401);
+            }
+            return response()->json(['error' => 'Error del servidor: ' . $e->getMessage()], 500);
         }
-        return response()->json(['error' => 'Error del servidor: ' . $e->getMessage()], 500);
     }
-}
-
-
-public function logout(Request $request)
+    public function fncLogout(Request $request)
     {
         $request->user()->tokens()->delete();
 

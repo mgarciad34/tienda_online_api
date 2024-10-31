@@ -22,20 +22,21 @@ class AdminCategoriasController extends Controller
     }
 
     public function obtenerCategorias(Request $request)
-    {
-        try {
-            $categorias = Categoria::all();
+{
+    try {
+        $categorias = Categoria::select('id', 'nombre')->get();
 
-            return response()->json([
-                'mensaje' => 'Categorías obtenidas',
-                'categorias' => $categorias,
-            ], 200);
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Ocurrió un error al obtener las categorías: ' . $e->getMessage(),
-            ], 500);
-        }
+        return response()->json([
+            'mensaje' => 'Categorías obtenidas',
+            'categorias' => $categorias,
+        ], 200);
+    } catch (\Exception $e) {
+        return response()->json([
+            'error' => 'Ocurrió un error al obtener las categorías: ' . $e->getMessage(),
+        ], 500);
     }
+}
+
 
     public function obtenerCategoriaId($id)
     {
@@ -46,7 +47,7 @@ class AdminCategoriasController extends Controller
                 'mensaje' => 'Categoria obtenida con éxito',
                 'categoria' => $categoria,
             ], 200);
-        } catch (\ModelNotFoundException $e) {
+        } catch (\Exception $e) {
             return response()->json([
                 'error' => 'No se encontró la categoría con el ID especificado',
             ], 404);
@@ -72,7 +73,7 @@ class AdminCategoriasController extends Controller
                 'mensaje' => 'Categoria actualizada con éxito',
                 'categoria' => $categoria,
             ], 200);
-        } catch (\ModelNotFoundException $e) {
+        } catch (\Exception $e) {
             return response()->json([
                 'error' => 'No se encontró la categoría con el ID especificado',
             ], 404);
@@ -83,5 +84,25 @@ class AdminCategoriasController extends Controller
         }
     }
 
+    public function eliminarCategoria($id)
+    {
+        try {
+            $categoria = Categoria::findOrFail($id);
+
+            $categoria->delete();
+
+            return response()->json([
+                'mensaje' => 'Categoria eliminada con éxito',
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'No se encontró la categoría con el ID especificado',
+            ], 404);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Ocurrió un error al eliminar la categoría: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
 
 }
