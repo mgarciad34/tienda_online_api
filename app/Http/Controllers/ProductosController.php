@@ -7,7 +7,7 @@ use App\Models\Producto;
 
 class ProductosController extends Controller
 {
-    public function fncCrearProducto(Request $request)
+    public function crearProducto(Request $request)
     {
         $validatedData = $request->validate([
             'nombre' => 'required|string|max:255',
@@ -36,7 +36,7 @@ class ProductosController extends Controller
         ], 200);
     }
 
-    public function fncObtenerProductos(Request $request)
+    public function obtenerProductos(Request $request)
     {
         try {
             $productos = Producto::all();
@@ -52,7 +52,7 @@ class ProductosController extends Controller
         }
     }
 
-    public function fncObtenerProductosNombre($nombre)
+    public function obtenerProductosNombre($nombre)
     {
         try {
             $productos = $nombre ? Producto::where('nombre', 'like', '%' . $nombre . '%')->get() : Producto::all();
@@ -68,7 +68,7 @@ class ProductosController extends Controller
         }
     }
 
-    public function fncActualizarProducto(Request $request, $id)
+    public function actualizarProducto(Request $request, $id)
 {
     try {
         $validatedData = $request->validate([
@@ -105,7 +105,7 @@ class ProductosController extends Controller
 }
 
 
-    public function fncEliminarProducto(Request $request, $id)
+    public function eliminarProducto(Request $request, $id)
     {
         try {
             $producto = Producto::findOrFail($id);

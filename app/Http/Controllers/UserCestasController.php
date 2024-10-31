@@ -4,26 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cesta;
-use Illuminate\Validation\Rule;
 
 class UserCestasController extends Controller
 {
-    public function crearCesta(Request $request)
+    public function anadirCesta(Request $request)
     {
-        // Validate the input data
         $validatedData = $request->validate([
-            'usuario_id' => ['required', 'exists:users,id'],
-            'total' => ['required', 'numeric'],
-            'estado' => ['required', Rule::in(['abierta', 'cerrada'])],
+            'usuario_id' => ['required', 'integer', 'min:1'],
+            'total' => ['required', 'numeric', 'min:0', 'max:1000'],
+            'estado' => ['nullable', 'string', 'max:255'],
         ]);
 
-        // Create a new Cesta instance
-        $cesta = Cesta::create($validatedData);
+        try {
+            $cesta = Cesta::create($validatedData);
 
-        // Return a success response
-        return response()->json([
-            'message' => 'Producto añadido a la cesta',
-            'data' => $cesta,
-        ], 201);
+            return response()->json(['message' => 'Cesta created successfully', 'data' => $cesta],  201);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to create Cesta: ' . $e->getMessage()], 422);
+        }
     }
 }

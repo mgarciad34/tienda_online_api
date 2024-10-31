@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 
 class AdminCategoriasController extends Controller
 {
-    public function fncCrearCategoria(Request $request){
+    public function crearCategoria(Request $request){
         $validatedData = $request->validate([
             'nombre' => 'required|string|max:255',
         ]);
@@ -21,7 +21,7 @@ class AdminCategoriasController extends Controller
         }
     }
 
-    public function fncObtenerCategorias(Request $request)
+    public function obtenerCategorias(Request $request)
 {
     try {
         $categorias = Categoria::select('id', 'nombre')->get();
@@ -38,7 +38,7 @@ class AdminCategoriasController extends Controller
 }
 
 
-    public function fncObtenerCategoriaId($id)
+    public function obtenerCategoriaId($id)
     {
         try {
             $categoria = Categoria::findOrFail($id);
@@ -58,7 +58,7 @@ class AdminCategoriasController extends Controller
         }
     }
 
-    public function fncActualizarCategoria(Request $request, $id)
+    public function actualizarCategoria(Request $request, $id)
     {
         try {
             $validatedData = $request->validate([
@@ -84,7 +84,7 @@ class AdminCategoriasController extends Controller
         }
     }
 
-    public function fncEliminarCategoria($id)
+    public function eliminarCategoria($id)
     {
         try {
             $categoria = Categoria::findOrFail($id);

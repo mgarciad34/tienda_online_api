@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminCategoriasController;
 use App\Http\Controllers\ProductosController;
+use App\Http\Controllers\UserCestasController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -25,23 +26,25 @@ Route::middleware('auth:sanctum')->group(function () {
 
 //Rutas Administrador
 Route::group(['prefix' => '/admin', 'middleware' => ['auth:sanctum', 'admin']], function () {
-    Route::post('/categorias', [AdminCategoriasController::class, 'fncCrearCategoria']);
-    Route::get('/categorias', [AdminCategoriasController::class, 'fncObtenerCategorias']);
-    Route::get('/categorias/{id}', [AdminCategoriasController::class, 'fncObtenerCategoriaId']);
-    Route::put('/categorias/{id}', [AdminCategoriasController::class, 'fncActualizarCategoria']);
-    Route::delete('/categorias/{id}', [AdminCategoriasController::class, 'fncEliminarCategoria']);
+    Route::post('/categorias', [AdminCategoriasController::class, 'crearCategoria']);
+    Route::get('/categorias', [AdminCategoriasController::class, 'obtenerCategorias']);
+    Route::get('/categorias/{id}', [AdminCategoriasController::class, 'obtenerCategoriaId']);
+    Route::put('/categorias/{id}', [AdminCategoriasController::class, 'actualizarCategoria']);
+    Route::delete('/categorias/{id}', [AdminCategoriasController::class, 'eliminarCategoria']);
 
     // Rutas Productos
-    Route::post('/productos', [ProductosController::class, 'fncCrearProducto']);
-    Route::get('/productos', [ProductosController::class, 'fncObtenerProductos']);
-    Route::get('/productos/{nombre}', [ProductosController::class, 'fncObtenerProductosNombre']);
-    Route::put('/productos/{id}', [ProductosController::class, 'fncActualizarProducto']);
-    Route::delete('/productos/{id}', [ProductosController::class, 'fncEliminarProducto']);
+    Route::post('/productos', [ProductosController::class, 'crearProducto']);
+    Route::get('/productos', [ProductosController::class, 'obtenerProductos']);
+    Route::get('/productos/{nombre}', [ProductosController::class, 'obtenerProductosNombre']);
+    Route::put('/productos/{id}', [ProductosController::class, 'actualizarProducto']);
+    Route::delete('/productos/{id}', [ProductosController::class, 'eliminarProducto']);
 });
 
 
 //Rutas Administrador
 Route::group(['prefix' => '/usuario', 'middleware' => ['auth:sanctum', 'usuario']], function () {
-    Route::get('/productos', [ProductosController::class, 'fncObtenerProductos']);
-    Route::put('/productos/{id}', [ProductosController::class, 'fncActualizarProducto']);
+    Route::get('/productos', [ProductosController::class, 'obtenerProductos']);
+    Route::put('/productos/{id}', [ProductosController::class, 'actualizarProducto']);
+    Route::post('/anadir/cesta',[UserCestasController::class, 'anadirCesta']);
+
 });
