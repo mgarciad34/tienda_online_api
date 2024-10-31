@@ -35,10 +35,9 @@ class Cesta extends Model
 	];
 
 	protected $fillable = [
-		'usuario_id',
-		'total',
-		'estado'
-	];
+        'id', 'usuario_id', 'total', 'estado'
+    ];
+
 
 	public function usuario()
 	{
