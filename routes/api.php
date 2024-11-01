@@ -51,4 +51,5 @@ Route::group(['prefix' => '/usuario', 'middleware' => ['auth:sanctum', 'usuario'
     Route::get('/obtener/estado/cesta/{usuarioId}',[UserCestasController::class, 'obtenerEstadoCesta']);
     Route::post('/agregar/producto', [UserDetallesCesta::class, 'insertarProducto']);
     Route::put('/actualizar/producto/{id}', [UserDetallesCesta::class, 'actualizarProducto']);
+    Route::delete('/eliminar/producto/{id}', [UserDetallesCesta::class, 'eliminarProducto']);
 });
