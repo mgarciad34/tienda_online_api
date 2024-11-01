@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminCategoriasController;
 use App\Http\Controllers\ProductosController;
 use App\Http\Controllers\UserCestasController;
 use App\Http\Controllers\UserDetallesCesta;
+use App\Http\Controllers\PaymentController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -52,4 +53,6 @@ Route::group(['prefix' => '/usuario', 'middleware' => ['auth:sanctum', 'usuario'
     Route::post('/agregar/producto', [UserDetallesCesta::class, 'insertarProducto']);
     Route::put('/actualizar/producto/{id}', [UserDetallesCesta::class, 'actualizarProducto']);
     Route::delete('/eliminar/producto/{id}', [UserDetallesCesta::class, 'eliminarProducto']);
+    Route::post('/stripe', [PaymentController::class, 'createPaymentIntent']);
+
 });
