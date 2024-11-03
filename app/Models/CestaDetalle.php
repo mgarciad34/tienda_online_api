@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class CestaDetalle
- * 
+ *
  * @property int $id
  * @property int $cesta_id
  * @property int $producto_id
@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property float $subtotal
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * 
+ *
  * @property Cesta $cesta
  * @property Producto $producto
  *
@@ -39,6 +39,7 @@ class CestaDetalle extends Model
 	];
 
 	protected $fillable = [
+        'id',
 		'cesta_id',
 		'producto_id',
 		'cantidad',
