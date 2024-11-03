@@ -49,5 +49,18 @@ class UserDetallesCesta extends Controller
         return response()->json(['message' => 'Producto actualizado correctamente', 'data' => $cestaDetalle], 200);
     }
 
+    public function eliminarProducto($id)
+    {
+        $cestaDetalle = CestaDetalle::findOrFail($id);
+
+        try {
+            $cestaDetalle->delete();
+            return response()->json(['message' => 'Cesta detalle eliminado correctamente'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error al eliminar la cesta detalle'], 500);
+        }
+    }
+
+
 
 }

@@ -7,6 +7,8 @@ use App\Http\Controllers\AdminCategoriasController;
 use App\Http\Controllers\ProductosController;
 use App\Http\Controllers\UserCestasController;
 use App\Http\Controllers\UserDetallesCesta;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\RecomendacionesController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -42,7 +44,7 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth:sanctum', 'admin']], 
 });
 
 
-//Rutas Administrador
+//Rutas usuario
 Route::group(['prefix' => '/usuario', 'middleware' => ['auth:sanctum', 'usuario']], function () {
     Route::get('/productos', [ProductosController::class, 'obtenerProductos']);
     Route::put('/productos/{id}', [ProductosController::class, 'actualizarProducto']);
@@ -51,4 +53,7 @@ Route::group(['prefix' => '/usuario', 'middleware' => ['auth:sanctum', 'usuario'
     Route::get('/obtener/estado/cesta/{usuarioId}',[UserCestasController::class, 'obtenerEstadoCesta']);
     Route::post('/agregar/producto', [UserDetallesCesta::class, 'insertarProducto']);
     Route::put('/actualizar/producto/{id}', [UserDetallesCesta::class, 'actualizarProducto']);
+    Route::delete('/eliminar/producto/{id}', [UserDetallesCesta::class, 'eliminarProducto']);
+    Route::post('/stripe', [PaymentController::class, 'createPaymentIntent']);
+    Route::get('/productos/recomendaciones/{usuarioId}', [RecomendacionesController::class, 'crearRecomendaciones']);
 });
