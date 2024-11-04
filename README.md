@@ -1,4 +1,4 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://drive.google.com/file/d/18pR6CaQ1eRQO1mkQ2M2Ka9EQB0j4PYIP/view?usp=sharing" width="400" alt="API REST Tienda Online Logo"></a></p>
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="./Logo.png" width="400" alt="API REST Tienda Online Logo"></a></p>
 
 <p align="center">
 <a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
