@@ -54,13 +54,59 @@ Luego tambien tenemos funcionalidades comunes como es el caso del login, y otras
 - **Ruta:** `http://localhost:8000/api/logout`
 - **Método:** `POST`
 - **Descripción:** Cerramos sesion de un usuario.
+- **Necesidades:** Token Bearer
 
 ### Recuperar Usuario
 
 ## Rutas del Administrador
 
-## Rutas del Usuario
+### Crear Categoria
+- **Ruta:** `http://localhost:8000/api/admin/categorias`
+- **Método:** `POST`
+- **Descripción:** Creamos una nueva categoria.
+- **JSON de Ejemplo:**
+- **Necesidades:** Token Bearer
 
+  ```json
+  {
+    "nombre": "Ropa"
+  }
+
+  ```
+
+### Ver categorias
+- **Ruta:** `http://localhost:8000/api/admin/categorias`
+- **Método:** `GET`
+- **Descripción:** Obtenemos las categorias existentes.
+- **Necesidades:** Token Bearer
+
+### Ver categoria por ID
+- **Ruta:** `http://localhost:8000/api/admin/categorias/{id}`
+- **Método:** `GET`
+- **Descripción:** Obtenemos una categoria por su id.
+- **Necesidades:** Token Bearer
+
+### Actualizar Categoria por ID
+- **Ruta:** `http://localhost:8000/api/admin/categorias/{id}`
+- **Método:** `PUT`
+- **Descripción:** Actualizamos una categoria por su id.
+- **JSON de Ejemplo:**
+- **Necesidades:** Token Bearer
+
+  ```json
+  {
+    "nombre": "Ropa"
+  }
+
+  ```
+
+### Eliminamos Categoria por ID
+- **Ruta:** `http://localhost:8000/api/admin/categorias/{id}`
+- **Método:** `DELETE`
+- **Descripción:** Eliminamos una categoria por su id.
+- **Necesidades:** Token Bearer
+
+## Rutas del Usuario
 
 ## Autor
 
