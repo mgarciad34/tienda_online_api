@@ -60,7 +60,9 @@ Luego tambien tenemos funcionalidades comunes como es el caso del login, y otras
 
 ## Rutas del Administrador
 
-### Crear Categoria
+### Categorias
+
+#### Crear Categoria
 - **Ruta:** `http://localhost:8000/api/admin/categorias`
 - **Método:** `POST`
 - **Descripción:** Creamos una nueva categoria.
@@ -74,19 +76,19 @@ Luego tambien tenemos funcionalidades comunes como es el caso del login, y otras
 
   ```
 
-### Ver categorias
+#### Ver categorias
 - **Ruta:** `http://localhost:8000/api/admin/categorias`
 - **Método:** `GET`
 - **Descripción:** Obtenemos las categorias existentes.
 - **Necesidades:** Token Bearer
 
-### Ver categoria por ID
+#### Ver categoria por ID
 - **Ruta:** `http://localhost:8000/api/admin/categorias/{id}`
 - **Método:** `GET`
 - **Descripción:** Obtenemos una categoria por su id.
 - **Necesidades:** Token Bearer
 
-### Actualizar Categoria por ID
+#### Actualizar Categoria por ID
 - **Ruta:** `http://localhost:8000/api/admin/categorias/{id}`
 - **Método:** `PUT`
 - **Descripción:** Actualizamos una categoria por su id.
@@ -100,11 +102,13 @@ Luego tambien tenemos funcionalidades comunes como es el caso del login, y otras
 
   ```
 
-### Eliminamos Categoria por ID
+#### Eliminamos Categoria por ID
 - **Ruta:** `http://localhost:8000/api/admin/categorias/{id}`
 - **Método:** `DELETE`
 - **Descripción:** Eliminamos una categoria por su id.
 - **Necesidades:** Token Bearer
+
+
 
 ## Rutas del Usuario
 
