@@ -1,25 +1,24 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="./Logo.png" width="400" alt="API REST Tienda Online Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
+#  API REST Tienda Online
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Es una API REST la cual contiene el desarrollo backend de una tienda online, utilizando Laravel como framework PHP. Esta API contiene dos roles Administrador y Usuario.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+En el rol del Administrador se pueden realizar las siguientes acciones:
+    - Gestión de las categorias
+    - Gestión de los productos
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+En el rol del usuario se pueden realizar las siguientes acciones:
+    - Visualización global de los productos.
+    - Visualización de los productos por categoria.
+    - Agregar productos al carrito.
+    - Realizar pedidos.
+    - Visualizar el historial de pedidos realizados.
+    - Actualizar el perfil del usuario.
+    - Obtener recomendaciones de productos por las compras realizadas.
+
+Luego tambien tenemos funcionalidades comunes como es el caso del login, y otras mas como el registro de nuevos usuarios, y la recuperación  de contraseña.
 
 ## Learning Laravel
 
