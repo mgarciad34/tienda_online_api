@@ -20,46 +20,48 @@ En el rol del usuario se pueden realizar las siguientes acciones:
 
 Luego tambien tenemos funcionalidades comunes como es el caso del login, y otras mas como el registro de nuevos usuarios, y la recuperación  de contraseña.
 
-## Learning Laravel
+## Endpoints Comunes
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Login
+- **Ruta:** `http://localhost:8000/api/login`
+- **Método:** `POST`
+- **Descripción:** Iniciamos sesion con un usuario.
+- **JSON de Ejemplo:**
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+  ```json
+  {
+    "email": "ramona.cummerata@moen.com",
+    "contrasena": "1234"
+  }
+  ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Registro de usuario
+- **Ruta:** `http://localhost:8000/api/registro`
+- **Método:** `POST`
+- **Descripción:** Creamos un nuevo usuario.
+- **JSON de Ejemplo:**
 
-## Laravel Sponsors
+  ```json
+  {
+    "nombre": "Nombre del usuario",
+    "email": "correo3@ejemplo.com",
+    "contrasena": "contraseña123",
+    "rol": "Administrador"
+  }
+  ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Cerrar Sesion
+- **Ruta:** `http://localhost:8000/api/logout`
+- **Método:** `POST`
+- **Descripción:** Cerramos sesion de un usuario.
 
-### Premium Partners
+### Recuperar Usuario
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## Rutas del Administrador
 
-## Contributing
+## Rutas del Usuario
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Code of Conduct
+## Autor
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- [Manuel García Díaz](https://github.com/mgarciad34)
