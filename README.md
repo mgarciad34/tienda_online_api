@@ -1,4 +1,4 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="./Logo.png" width="400" alt="API REST Tienda Online Logo"></a></p>
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="./Logo.jpg" width="400" alt="API REST Tienda Online Logo"></a></p>
 
 
 #  API REST Tienda Online
