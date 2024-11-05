@@ -58,7 +58,7 @@ Luego tambien tenemos funcionalidades comunes como es el caso del login, y otras
 
 ### Recuperar Usuario
 
-## Rutas del Administrador
+## Endpoints del Administrador
 
 ### Categorias
 
@@ -109,6 +109,65 @@ Luego tambien tenemos funcionalidades comunes como es el caso del login, y otras
 - **Necesidades:** Token Bearer
 
 
+### Productos
+
+#### Crear nuevo producto
+- **Ruta:** `http://localhost:8000/api/admin/productos`
+- **Método:** `POST`
+- **Descripción:** Creamos un nuevo producto.
+- **JSON de Ejemplo:**
+- **Necesidades:** Token Bearer
+
+  ```json
+  {
+  "nombre": "Camiseta QUATRO",
+  "img1": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABkUlEQVR42mL8//8/w3XAIyoAWTHiJz5SgHZVcsVgMxwbQG4GBAXIXuNlPgI8QuAHiOYBWRwMxy8SQPAfzGKkRJhhBlY/gJAVwDNrKyAQWgA2zwQiwTgrZDF8gFgOwQ8+8lgBgZHYIBiPgeBTVgvJ9BWFgAMkcsHoLKCTkx/xHiJTDAGRewGRjQc5SBHgAULQJ2BpgAJqDAJUVQBTE/NgAvBKYADWALQiNHzAmAALEAaAUMvB6AAK6gx1TgWkaXcKlHoFkzgUqCsgFWcAzKAAStA/YNVQByggCWbA4AFApBRwrAoA1OAAfCUJ6Nc3giRWcj+BMpjA/BrbBwhcBLwDJmsAKXGBMFgDNRDEsQGUOAIQlgGwk5gAgmYgBTgGRsQBzUwBoAgBIRUwLLAKCNdAAglpAKqQgx5VHCED8AEOyK5VNCClcJAKqAYUwDYgtAPwG9t5P/3HuLzIAnLN+AAwgxn4CVWIVfMFw2+Et4gaU+AAGaABDAAv5UBbbPMgyAAAAAElFTkSuQmCC",
+  "img2": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABkUlEQVR42mL8//8/w3XAIyoAWTHiJz5SgHZVcsVgMxwbQG4GBAXIXuNlPgI8QuAHiOYBWRwMxy8SQPAfzGKkRJhhBlY/gJAVwDNrKyAQWgA2zwQiwTgrZDF8gFgOwQ8+8lgBgZHYIBiPgeBTVgvJ9BWFgAMkcsHoLKCTkx/xHiJTDAGRewGRjQc5SBHgAULQJ2BpgAJqDAJUVQBTE/NgAvBKYADWALQiNHzAmAALEAaAUMvB6AAK6gx1TgWkaXcKlHoFkzgUqCsgFWcAzKAAStA/YNVQByggCWbA4AFApBRwrAoA1OAAfCUJ6Nc3giRWcj+BMpjA/BrbBwhcBLwDJmsAKXGBMFgDNRDEsQGUOAIQlgGwk5gAgmYgBTgGRsQBzUwBoAgBIRUwLLAKCNdAAglpAKqQgx5VHCED8AEOyK5VNCClcJAKqAYUwDYgtAPwG9t5P/3HuLzIAnLN+AAwgxn4CVWIVfMFw2+Et4gaU+AAGaABDAAv5UBbbPMgyAAAAAElFTkSuQmCC",
+  "img3": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABkUlEQVR42mL8//8/w3XAIyoAWTHiJz5SgHZVcsVgMxwbQG4GBAXIXuNlPgI8QuAHiOYBWRwMxy8SQPAfzGKkRJhhBlY/gJAVwDNrKyAQWgA2zwQiwTgrZDF8gFgOwQ8+8lgBgZHYIBiPgeBTVgvJ9BWFgAMkcsHoLKCTkx/xHiJTDAGRewGRjQc5SBHgAULQJ2BpgAJqDAJUVQBTE/NgAvBKYADWALQiNHzAmAALEAaAUMvB6AAK6gx1TgWkaXcKlHoFkzgUqCsgFWcAzKAAStA/YNVQByggCWbA4AFApBRwrAoA1OAAfCUJ6Nc3giRWcj+BMpjA/BrbBwhcBLwDJmsAKXGBMFgDNRDEsQGUOAIQlgGwk5gAgmYgBTgGRsQBzUwBoAgBIRUwLLAKCNdAAglpAKqQgx5VHCED8AEOyK5VNCClcJAKqAYUwDYgtAPwG9t5P/3HuLzIAnLN+AAwgxn4CVWIVfMFw2+Et4gaU+AAGaABDAAv5UBbbPMgyAAAAAElFTkSuQmCC",
+  "descripcion": "Esta es la descripción del producto de prueba.",
+  "precio": 199.99,
+  "existencias": 50,
+  "categoria_id": 8
+    }
+  ```
+
+#### Ver productos
+- **Ruta:** `http://localhost:8000/api/admin/productos`
+- **Método:** `GET`
+- **Descripción:** Obtenemos los productos existentes.
+- **Necesidades:** Token Bearer
+
+#### Ver producto por nombre
+- **Ruta:** `http://localhost:8000/api/admin/productos/{nombre}`
+- **Método:** `GET`
+- **Descripción:** Obtenemos los productos existentes por el nombre.
+- **Necesidades:** Token Bearer
+
+#### Actualizar producto por Id
+- **Ruta:** `http://localhost:8000/api/admin/productos/{id}`
+- **Método:** `PUT`
+- **Descripción:** Actualizamos un producto por su Id.
+- **JSON de Ejemplo:**
+- **Necesidades:** Token Bearer
+
+  ```json
+  {
+  "nombre": "Camiseta QUATRO",
+  "img1": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABkUlEQVR42mL8//8/w3XAIyoAWTHiJz5SgHZVcsVgMxwbQG4GBAXIXuNlPgI8QuAHiOYBWRwMxy8SQPAfzGKkRJhhBlY/gJAVwDNrKyAQWgA2zwQiwTgrZDF8gFgOwQ8+8lgBgZHYIBiPgeBTVgvJ9BWFgAMkcsHoLKCTkx/xHiJTDAGRewGRjQc5SBHgAULQJ2BpgAJqDAJUVQBTE/NgAvBKYADWALQiNHzAmAALEAaAUMvB6AAK6gx1TgWkaXcKlHoFkzgUqCsgFWcAzKAAStA/YNVQByggCWbA4AFApBRwrAoA1OAAfCUJ6Nc3giRWcj+BMpjA/BrbBwhcBLwDJmsAKXGBMFgDNRDEsQGUOAIQlgGwk5gAgmYgBTgGRsQBzUwBoAgBIRUwLLAKCNdAAglpAKqQgx5VHCED8AEOyK5VNCClcJAKqAYUwDYgtAPwG9t5P/3HuLzIAnLN+AAwgxn4CVWIVfMFw2+Et4gaU+AAGaABDAAv5UBbbPMgyAAAAAElFTkSuQmCC",
+  "img2": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABkUlEQVR42mL8//8/w3XAIyoAWTHiJz5SgHZVcsVgMxwbQG4GBAXIXuNlPgI8QuAHiOYBWRwMxy8SQPAfzGKkRJhhBlY/gJAVwDNrKyAQWgA2zwQiwTgrZDF8gFgOwQ8+8lgBgZHYIBiPgeBTVgvJ9BWFgAMkcsHoLKCTkx/xHiJTDAGRewGRjQc5SBHgAULQJ2BpgAJqDAJUVQBTE/NgAvBKYADWALQiNHzAmAALEAaAUMvB6AAK6gx1TgWkaXcKlHoFkzgUqCsgFWcAzKAAStA/YNVQByggCWbA4AFApBRwrAoA1OAAfCUJ6Nc3giRWcj+BMpjA/BrbBwhcBLwDJmsAKXGBMFgDNRDEsQGUOAIQlgGwk5gAgmYgBTgGRsQBzUwBoAgBIRUwLLAKCNdAAglpAKqQgx5VHCED8AEOyK5VNCClcJAKqAYUwDYgtAPwG9t5P/3HuLzIAnLN+AAwgxn4CVWIVfMFw2+Et4gaU+AAGaABDAAv5UBbbPMgyAAAAAElFTkSuQmCC",
+  "img3": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABkUlEQVR42mL8//8/w3XAIyoAWTHiJz5SgHZVcsVgMxwbQG4GBAXIXuNlPgI8QuAHiOYBWRwMxy8SQPAfzGKkRJhhBlY/gJAVwDNrKyAQWgA2zwQiwTgrZDF8gFgOwQ8+8lgBgZHYIBiPgeBTVgvJ9BWFgAMkcsHoLKCTkx/xHiJTDAGRewGRjQc5SBHgAULQJ2BpgAJqDAJUVQBTE/NgAvBKYADWALQiNHzAmAALEAaAUMvB6AAK6gx1TgWkaXcKlHoFkzgUqCsgFWcAzKAAStA/YNVQByggCWbA4AFApBRwrAoA1OAAfCUJ6Nc3giRWcj+BMpjA/BrbBwhcBLwDJmsAKXGBMFgDNRDEsQGUOAIQlgGwk5gAgmYgBTgGRsQBzUwBoAgBIRUwLLAKCNdAAglpAKqQgx5VHCED8AEOyK5VNCClcJAKqAYUwDYgtAPwG9t5P/3HuLzIAnLN+AAwgxn4CVWIVfMFw2+Et4gaU+AAGaABDAAv5UBbbPMgyAAAAAElFTkSuQmCC",
+  "descripcion": "Esta es la descripción del producto de prueba.",
+  "precio": 199.99,
+  "existencias": 50,
+  "categoria_id": 8
+    }
+  ```
+
+#### Eliminamos Producto por ID
+- **Ruta:** `http://localhost:8000/api/admin/productos/{id}`
+- **Método:** `DELETE`
+- **Descripción:** Eliminamos un producto por su id.
+- **Necesidades:** Token Bearer
 
 ## Rutas del Usuario
 
