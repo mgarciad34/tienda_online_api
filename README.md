@@ -196,12 +196,11 @@ Luego tambien tenemos funcionalidades comunes como es el caso del login, y otras
 
   ```json
   {
-    "cesta_id": 1,
-    "producto_id": 4,
-    "cantidad": 3,
-    "precio_unitario": 100.00,
-    "subtotal": 300.00
+  "usuario_id": 28,
+  "total": 0,
+  "estado": "abierta"
   }
+
   ```
 
 #### Ver cesta abierta del usuario
@@ -214,7 +213,72 @@ Luego tambien tenemos funcionalidades comunes como es el caso del login, y otras
 - **Ruta:** `http://localhost:8000/api/usuario/cerrar/cesta/{id}`
 - **Método:** `PUT`
 - **Descripción:** Cerramos una cesta.
+- **Necesidades:** Token Bearer
+
+### Gestión del carrito
+
+#### Añadir Producto
+- **Ruta:** `http://localhost:8000/api/admin/categorias`
+- **Método:** `POST`
+- **Descripción:** Añadimos un producto a la cesta.
 - **JSON de Ejemplo:**
+- **Necesidades:** Token Bearer
+
+  ```json
+  {
+    "cesta_id": 1,
+    "producto_id": 4,
+    "cantidad": 3,
+    "precio_unitario": 100.00,
+    "subtotal": 300.00
+  }
+  ```
+#### Actualizar Producto de la cesta por Id
+- **Ruta:** `http://localhost:8000/api/usuario/actualizar/producto/{id}`
+- **Método:** `PUT`
+- **Descripción:** Actualizamos un producto a la cesta.
+- **JSON de Ejemplo:**
+- **Necesidades:** Token Bearer
+
+  ```json
+  {
+    "cesta_id": 1,
+    "producto_id": 5,
+    "cantidad": 2,
+    "precio_unitario": 100.00,
+    "subtotal": 200.00
+  }
+  ```
+
+#### Eliminar producto de la cesta
+- **Ruta:** `http://localhost:8000/api/usuario/eliminar/producto/{id}`
+- **Método:** `DELETE`
+- **Descripción:** Eliminamos el producto de la cesta.
+- **Necesidades:** Token Bearer
+
+### Gestión de Pagos
+
+#### Simulación de pago con stripe
+- **Ruta:** `http://localhost:8000/api/usuario/stripe`
+- **Método:** `PUT`
+- **Descripción:** Actualizamos un producto a la cesta.
+- **JSON de Ejemplo:**
+- **Necesidades:** Token Bearer
+
+  ```json
+  {
+    "amount": 10000,
+    "currency": "eur",
+    "stripeToken": "tok_visa"
+  }
+  ```
+
+### Algoritmo
+
+#### Recomendaciones para el usuario
+- **Ruta:** `http://localhost:8000/api/usuario/productos/recomendaciones/{id}`
+- **Método:** `GET`
+- **Descripción:** Buscamos recomendaciones de productos para el usuario
 - **Necesidades:** Token Bearer
 
 ## Autor
