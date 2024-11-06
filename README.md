@@ -1,66 +1,286 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="./Logo.jpg" width="400" alt="API REST Tienda Online Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
+#  API REST Tienda Online
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Es una API REST la cual contiene el desarrollo backend de una tienda online, utilizando Laravel como framework PHP. Esta API contiene dos roles Administrador y Usuario.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+En el rol del Administrador se pueden realizar las siguientes acciones:
+    - Gestión de las categorias
+    - Gestión de los productos
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+En el rol del usuario se pueden realizar las siguientes acciones:
+    - Visualización global de los productos.
+    - Visualización de los productos por categoria.
+    - Agregar productos al carrito.
+    - Realizar pedidos.
+    - Visualizar el historial de pedidos realizados.
+    - Actualizar el perfil del usuario.
+    - Obtener recomendaciones de productos por las compras realizadas.
 
-## Learning Laravel
+Luego tambien tenemos funcionalidades comunes como es el caso del login, y otras mas como el registro de nuevos usuarios, y la recuperación  de contraseña.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Endpoints Comunes
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Login
+- **Ruta:** `http://localhost:8000/api/login`
+- **Método:** `POST`
+- **Descripción:** Iniciamos sesion con un usuario.
+- **JSON de Ejemplo:**
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+  ```json
+  {
+    "email": "ramona.cummerata@moen.com",
+    "contrasena": "1234"
+  }
+  ```
 
-## Laravel Sponsors
+### Registro de usuario
+- **Ruta:** `http://localhost:8000/api/registro`
+- **Método:** `POST`
+- **Descripción:** Creamos un nuevo usuario.
+- **JSON de Ejemplo:**
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+  ```json
+  {
+    "nombre": "Nombre del usuario",
+    "email": "correo3@ejemplo.com",
+    "contrasena": "contraseña123",
+    "rol": "Administrador"
+  }
+  ```
 
-### Premium Partners
+### Cerrar Sesion
+- **Ruta:** `http://localhost:8000/api/logout`
+- **Método:** `POST`
+- **Descripción:** Cerramos sesion de un usuario.
+- **Necesidades:** Token Bearer
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### Recuperar Usuario
 
-## Contributing
+## Endpoints del Administrador
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Categorias
 
-## Code of Conduct
+#### Crear Categoria
+- **Ruta:** `http://localhost:8000/api/admin/categorias`
+- **Método:** `POST`
+- **Descripción:** Creamos una nueva categoria.
+- **JSON de Ejemplo:**
+- **Necesidades:** Token Bearer
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+  ```json
+  {
+    "nombre": "Ropa"
+  }
 
-## Security Vulnerabilities
+  ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+#### Ver categorias
+- **Ruta:** `http://localhost:8000/api/admin/categorias`
+- **Método:** `GET`
+- **Descripción:** Obtenemos las categorias existentes.
+- **Necesidades:** Token Bearer
 
-## License
+#### Ver categoria por ID
+- **Ruta:** `http://localhost:8000/api/admin/categorias/{id}`
+- **Método:** `GET`
+- **Descripción:** Obtenemos una categoria por su id.
+- **Necesidades:** Token Bearer
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+#### Actualizar Categoria por ID
+- **Ruta:** `http://localhost:8000/api/admin/categorias/{id}`
+- **Método:** `PUT`
+- **Descripción:** Actualizamos una categoria por su id.
+- **JSON de Ejemplo:**
+- **Necesidades:** Token Bearer
+
+  ```json
+  {
+    "nombre": "Ropa"
+  }
+
+  ```
+
+#### Eliminamos Categoria por ID
+- **Ruta:** `http://localhost:8000/api/admin/categorias/{id}`
+- **Método:** `DELETE`
+- **Descripción:** Eliminamos una categoria por su id.
+- **Necesidades:** Token Bearer
+
+
+### Productos
+
+#### Crear nuevo producto
+- **Ruta:** `http://localhost:8000/api/admin/productos`
+- **Método:** `POST`
+- **Descripción:** Creamos un nuevo producto.
+- **JSON de Ejemplo:**
+- **Necesidades:** Token Bearer
+
+  ```json
+  {
+  "nombre": "Camiseta QUATRO",
+  "img1": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABkUlEQVR42mL8//8/w3XAIyoAWTHiJz5SgHZVcsVgMxwbQG4GBAXIXuNlPgI8QuAHiOYBWRwMxy8SQPAfzGKkRJhhBlY/gJAVwDNrKyAQWgA2zwQiwTgrZDF8gFgOwQ8+8lgBgZHYIBiPgeBTVgvJ9BWFgAMkcsHoLKCTkx/xHiJTDAGRewGRjQc5SBHgAULQJ2BpgAJqDAJUVQBTE/NgAvBKYADWALQiNHzAmAALEAaAUMvB6AAK6gx1TgWkaXcKlHoFkzgUqCsgFWcAzKAAStA/YNVQByggCWbA4AFApBRwrAoA1OAAfCUJ6Nc3giRWcj+BMpjA/BrbBwhcBLwDJmsAKXGBMFgDNRDEsQGUOAIQlgGwk5gAgmYgBTgGRsQBzUwBoAgBIRUwLLAKCNdAAglpAKqQgx5VHCED8AEOyK5VNCClcJAKqAYUwDYgtAPwG9t5P/3HuLzIAnLN+AAwgxn4CVWIVfMFw2+Et4gaU+AAGaABDAAv5UBbbPMgyAAAAAElFTkSuQmCC",
+  "img2": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABkUlEQVR42mL8//8/w3XAIyoAWTHiJz5SgHZVcsVgMxwbQG4GBAXIXuNlPgI8QuAHiOYBWRwMxy8SQPAfzGKkRJhhBlY/gJAVwDNrKyAQWgA2zwQiwTgrZDF8gFgOwQ8+8lgBgZHYIBiPgeBTVgvJ9BWFgAMkcsHoLKCTkx/xHiJTDAGRewGRjQc5SBHgAULQJ2BpgAJqDAJUVQBTE/NgAvBKYADWALQiNHzAmAALEAaAUMvB6AAK6gx1TgWkaXcKlHoFkzgUqCsgFWcAzKAAStA/YNVQByggCWbA4AFApBRwrAoA1OAAfCUJ6Nc3giRWcj+BMpjA/BrbBwhcBLwDJmsAKXGBMFgDNRDEsQGUOAIQlgGwk5gAgmYgBTgGRsQBzUwBoAgBIRUwLLAKCNdAAglpAKqQgx5VHCED8AEOyK5VNCClcJAKqAYUwDYgtAPwG9t5P/3HuLzIAnLN+AAwgxn4CVWIVfMFw2+Et4gaU+AAGaABDAAv5UBbbPMgyAAAAAElFTkSuQmCC",
+  "img3": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABkUlEQVR42mL8//8/w3XAIyoAWTHiJz5SgHZVcsVgMxwbQG4GBAXIXuNlPgI8QuAHiOYBWRwMxy8SQPAfzGKkRJhhBlY/gJAVwDNrKyAQWgA2zwQiwTgrZDF8gFgOwQ8+8lgBgZHYIBiPgeBTVgvJ9BWFgAMkcsHoLKCTkx/xHiJTDAGRewGRjQc5SBHgAULQJ2BpgAJqDAJUVQBTE/NgAvBKYADWALQiNHzAmAALEAaAUMvB6AAK6gx1TgWkaXcKlHoFkzgUqCsgFWcAzKAAStA/YNVQByggCWbA4AFApBRwrAoA1OAAfCUJ6Nc3giRWcj+BMpjA/BrbBwhcBLwDJmsAKXGBMFgDNRDEsQGUOAIQlgGwk5gAgmYgBTgGRsQBzUwBoAgBIRUwLLAKCNdAAglpAKqQgx5VHCED8AEOyK5VNCClcJAKqAYUwDYgtAPwG9t5P/3HuLzIAnLN+AAwgxn4CVWIVfMFw2+Et4gaU+AAGaABDAAv5UBbbPMgyAAAAAElFTkSuQmCC",
+  "descripcion": "Esta es la descripción del producto de prueba.",
+  "precio": 199.99,
+  "existencias": 50,
+  "categoria_id": 8
+    }
+  ```
+
+#### Ver productos
+- **Ruta:** `http://localhost:8000/api/admin/productos`
+- **Método:** `GET`
+- **Descripción:** Obtenemos los productos existentes.
+- **Necesidades:** Token Bearer
+
+#### Ver producto por nombre
+- **Ruta:** `http://localhost:8000/api/admin/productos/{nombre}`
+- **Método:** `GET`
+- **Descripción:** Obtenemos los productos existentes por el nombre.
+- **Necesidades:** Token Bearer
+
+#### Actualizar producto por Id
+- **Ruta:** `http://localhost:8000/api/admin/productos/{id}`
+- **Método:** `PUT`
+- **Descripción:** Actualizamos un producto por su Id.
+- **JSON de Ejemplo:**
+- **Necesidades:** Token Bearer
+
+  ```json
+  {
+  "nombre": "Camiseta QUATRO",
+  "img1": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABkUlEQVR42mL8//8/w3XAIyoAWTHiJz5SgHZVcsVgMxwbQG4GBAXIXuNlPgI8QuAHiOYBWRwMxy8SQPAfzGKkRJhhBlY/gJAVwDNrKyAQWgA2zwQiwTgrZDF8gFgOwQ8+8lgBgZHYIBiPgeBTVgvJ9BWFgAMkcsHoLKCTkx/xHiJTDAGRewGRjQc5SBHgAULQJ2BpgAJqDAJUVQBTE/NgAvBKYADWALQiNHzAmAALEAaAUMvB6AAK6gx1TgWkaXcKlHoFkzgUqCsgFWcAzKAAStA/YNVQByggCWbA4AFApBRwrAoA1OAAfCUJ6Nc3giRWcj+BMpjA/BrbBwhcBLwDJmsAKXGBMFgDNRDEsQGUOAIQlgGwk5gAgmYgBTgGRsQBzUwBoAgBIRUwLLAKCNdAAglpAKqQgx5VHCED8AEOyK5VNCClcJAKqAYUwDYgtAPwG9t5P/3HuLzIAnLN+AAwgxn4CVWIVfMFw2+Et4gaU+AAGaABDAAv5UBbbPMgyAAAAAElFTkSuQmCC",
+  "img2": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABkUlEQVR42mL8//8/w3XAIyoAWTHiJz5SgHZVcsVgMxwbQG4GBAXIXuNlPgI8QuAHiOYBWRwMxy8SQPAfzGKkRJhhBlY/gJAVwDNrKyAQWgA2zwQiwTgrZDF8gFgOwQ8+8lgBgZHYIBiPgeBTVgvJ9BWFgAMkcsHoLKCTkx/xHiJTDAGRewGRjQc5SBHgAULQJ2BpgAJqDAJUVQBTE/NgAvBKYADWALQiNHzAmAALEAaAUMvB6AAK6gx1TgWkaXcKlHoFkzgUqCsgFWcAzKAAStA/YNVQByggCWbA4AFApBRwrAoA1OAAfCUJ6Nc3giRWcj+BMpjA/BrbBwhcBLwDJmsAKXGBMFgDNRDEsQGUOAIQlgGwk5gAgmYgBTgGRsQBzUwBoAgBIRUwLLAKCNdAAglpAKqQgx5VHCED8AEOyK5VNCClcJAKqAYUwDYgtAPwG9t5P/3HuLzIAnLN+AAwgxn4CVWIVfMFw2+Et4gaU+AAGaABDAAv5UBbbPMgyAAAAAElFTkSuQmCC",
+  "img3": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABkUlEQVR42mL8//8/w3XAIyoAWTHiJz5SgHZVcsVgMxwbQG4GBAXIXuNlPgI8QuAHiOYBWRwMxy8SQPAfzGKkRJhhBlY/gJAVwDNrKyAQWgA2zwQiwTgrZDF8gFgOwQ8+8lgBgZHYIBiPgeBTVgvJ9BWFgAMkcsHoLKCTkx/xHiJTDAGRewGRjQc5SBHgAULQJ2BpgAJqDAJUVQBTE/NgAvBKYADWALQiNHzAmAALEAaAUMvB6AAK6gx1TgWkaXcKlHoFkzgUqCsgFWcAzKAAStA/YNVQByggCWbA4AFApBRwrAoA1OAAfCUJ6Nc3giRWcj+BMpjA/BrbBwhcBLwDJmsAKXGBMFgDNRDEsQGUOAIQlgGwk5gAgmYgBTgGRsQBzUwBoAgBIRUwLLAKCNdAAglpAKqQgx5VHCED8AEOyK5VNCClcJAKqAYUwDYgtAPwG9t5P/3HuLzIAnLN+AAwgxn4CVWIVfMFw2+Et4gaU+AAGaABDAAv5UBbbPMgyAAAAAElFTkSuQmCC",
+  "descripcion": "Esta es la descripción del producto de prueba.",
+  "precio": 199.99,
+  "existencias": 50,
+  "categoria_id": 8
+    }
+  ```
+
+#### Eliminamos Producto por ID
+- **Ruta:** `http://localhost:8000/api/admin/productos/{id}`
+- **Método:** `DELETE`
+- **Descripción:** Eliminamos un producto por su id.
+- **Necesidades:** Token Bearer
+
+## Endpoints del Usuario
+
+### Visualización de productos
+
+#### Ver productos
+- **Ruta:** `http://localhost:8000/api/usuario/productos`
+- **Método:** `GET`
+- **Descripción:** Obtenemos los productos existentes.
+- **Necesidades:** Token Bearer
+  
+#### Ver producto por Id
+- **Ruta:** `http://localhost:8000/api/usuario/productos/{id}`
+- **Método:** `GET`
+- **Descripción:** Obtenemos un producto por su Id.
+- **Necesidades:** Token Bearer
+
+### Gestión de cestas
+
+#### Crear Cesta
+- **Ruta:** `http://localhost:8000/api/admin/categorias`
+- **Método:** `POST`
+- **Descripción:** Creamos una nueva cesta.
+- **JSON de Ejemplo:**
+- **Necesidades:** Token Bearer
+
+  ```json
+  {
+  "usuario_id": 28,
+  "total": 0,
+  "estado": "abierta"
+  }
+
+  ```
+
+#### Ver cesta abierta del usuario
+- **Ruta:** `http://localhost:8000/api/usuario/productos/{id}`
+- **Método:** `GET`
+- **Descripción:** Obtenemos la primera cesta abierta del usuario
+- **Necesidades:** Token Bearer
+
+#### Cerrar Cesta
+- **Ruta:** `http://localhost:8000/api/usuario/cerrar/cesta/{id}`
+- **Método:** `PUT`
+- **Descripción:** Cerramos una cesta.
+- **Necesidades:** Token Bearer
+
+### Gestión del carrito
+
+#### Añadir Producto
+- **Ruta:** `http://localhost:8000/api/admin/categorias`
+- **Método:** `POST`
+- **Descripción:** Añadimos un producto a la cesta.
+- **JSON de Ejemplo:**
+- **Necesidades:** Token Bearer
+
+  ```json
+  {
+    "cesta_id": 1,
+    "producto_id": 4,
+    "cantidad": 3,
+    "precio_unitario": 100.00,
+    "subtotal": 300.00
+  }
+  ```
+#### Actualizar Producto de la cesta por Id
+- **Ruta:** `http://localhost:8000/api/usuario/actualizar/producto/{id}`
+- **Método:** `PUT`
+- **Descripción:** Actualizamos un producto a la cesta.
+- **JSON de Ejemplo:**
+- **Necesidades:** Token Bearer
+
+  ```json
+  {
+    "cesta_id": 1,
+    "producto_id": 5,
+    "cantidad": 2,
+    "precio_unitario": 100.00,
+    "subtotal": 200.00
+  }
+  ```
+
+#### Eliminar producto de la cesta
+- **Ruta:** `http://localhost:8000/api/usuario/eliminar/producto/{id}`
+- **Método:** `DELETE`
+- **Descripción:** Eliminamos el producto de la cesta.
+- **Necesidades:** Token Bearer
+
+### Gestión de Pagos
+
+#### Simulación de pago con stripe
+- **Ruta:** `http://localhost:8000/api/usuario/stripe`
+- **Método:** `PUT`
+- **Descripción:** Actualizamos un producto a la cesta.
+- **JSON de Ejemplo:**
+- **Necesidades:** Token Bearer
+
+  ```json
+  {
+    "amount": 10000,
+    "currency": "eur",
+    "stripeToken": "tok_visa"
+  }
+  ```
+
+### Algoritmo
+
+#### Recomendaciones para el usuario
+- **Ruta:** `http://localhost:8000/api/usuario/productos/recomendaciones/{id}`
+- **Método:** `GET`
+- **Descripción:** Buscamos recomendaciones de productos para el usuario
+- **Necesidades:** Token Bearer
+
+## Autor
+
+- [Manuel García Díaz](https://github.com/mgarciad34)
