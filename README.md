@@ -169,7 +169,53 @@ Luego tambien tenemos funcionalidades comunes como es el caso del login, y otras
 - **Descripción:** Eliminamos un producto por su id.
 - **Necesidades:** Token Bearer
 
-## Rutas del Usuario
+## Endpoints del Usuario
+
+### Visualización de productos
+
+#### Ver productos
+- **Ruta:** `http://localhost:8000/api/usuario/productos`
+- **Método:** `GET`
+- **Descripción:** Obtenemos los productos existentes.
+- **Necesidades:** Token Bearer
+  
+#### Ver producto por Id
+- **Ruta:** `http://localhost:8000/api/usuario/productos/{id}`
+- **Método:** `GET`
+- **Descripción:** Obtenemos un producto por su Id.
+- **Necesidades:** Token Bearer
+
+### Gestión de cestas
+
+#### Crear Cesta
+- **Ruta:** `http://localhost:8000/api/admin/categorias`
+- **Método:** `POST`
+- **Descripción:** Creamos una nueva cesta.
+- **JSON de Ejemplo:**
+- **Necesidades:** Token Bearer
+
+  ```json
+  {
+    "cesta_id": 1,
+    "producto_id": 4,
+    "cantidad": 3,
+    "precio_unitario": 100.00,
+    "subtotal": 300.00
+  }
+  ```
+
+#### Ver cesta abierta del usuario
+- **Ruta:** `http://localhost:8000/api/usuario/productos/{id}`
+- **Método:** `GET`
+- **Descripción:** Obtenemos la primera cesta abierta del usuario
+- **Necesidades:** Token Bearer
+
+#### Cerrar Cesta
+- **Ruta:** `http://localhost:8000/api/usuario/cerrar/cesta/{id}`
+- **Método:** `PUT`
+- **Descripción:** Cerramos una cesta.
+- **JSON de Ejemplo:**
+- **Necesidades:** Token Bearer
 
 ## Autor
 

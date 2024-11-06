@@ -66,6 +66,23 @@ class ProductosController extends Controller
         }
     }
 
+    public function obtenerProductosId($id)
+    {
+        try {
+            $producto = $id ? Producto::findOrFail($id) : null;
+
+            return response()->json([
+                'mensaje' => 'Producto obtenido',
+                'producto' => $producto,
+            ], $producto ? 200 : 404);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Ocurrió un error al obtener el producto: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+
     public function actualizarProducto(Request $request, $id)
     {
         try {
