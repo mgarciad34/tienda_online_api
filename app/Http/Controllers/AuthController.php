@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\PersonalAccessToken;
 use App\Http\Controllers\UserCestasController;
-
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 class AuthController extends Controller
 {
 
@@ -113,5 +114,57 @@ class AuthController extends Controller
         return response()->json(['message' => 'Cierre de sesión exitoso'], 200);
     }
 
+
+    public function recuperarCorreo(Request $request)
+    {
+        // Validamos que el correo sea válido
+        $request->validate([
+            'email' => 'required|email'
+        ]);
+
+        // Obtenemos el email del request
+        $correoDestino = $request->input('email');
+
+        // Buscamos al usuario por el correo
+        $usuario = User::where('email', $correoDestino)->first();
+
+        // Si el usuario no existe, retornamos un error
+        if (!$usuario) {
+            return response()->json(['status' => 'error', 'message' => 'Usuario no encontrado.'], 404);
+        }
+
+        // Generamos una nueva contraseña temporal y la encriptamos
+        $nuevaContrasena = "123456";
+        $usuario->contrasena = bcrypt($nuevaContrasena);
+
+        // Guardamos la nueva contraseña en el modelo
+        $usuario->save();
+
+        try {
+            Mail::raw('', function ($message) use ($correoDestino, $nuevaContrasena) {
+                $body = new \Symfony\Component\Mime\Part\TextPart("
+Estimado/a cliente,
+
+Le informamos que hemos recibido una solicitud de recuperación de contraseña para su cuenta en nuestra tienda online. A continuación, le adjuntamos la nueva contraseña temporal:
+
+Nueva contraseña: {$nuevaContrasena}
+
+Por favor, cambie esta contraseña en el menú de ajustes de su cuenta lo antes posible para garantizar la seguridad de su información personal.
+
+Atentamente,
+El equipo de soporte de nuestra tienda online
+");
+
+                $message->to($correoDestino)
+                    ->subject('Recuperación de contraseña - Nuestra Tienda Online')
+                    ->setBody($body);
+            });
+
+
+            return response()->json(['status' => 'success', 'message' => 'Correo enviado exitosamente.'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => 'Ocurrió un error al enviar el correo. Por favor, intenta nuevamente.', 500]);
+        }
+    }
 
 }

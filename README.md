@@ -57,6 +57,19 @@ Luego tambien tenemos funcionalidades comunes como es el caso del login, y otras
 - **Necesidades:** Token Bearer
 
 ### Recuperar Usuario
+- **Ruta:** `http://localhost:8000/api/recuperar`
+- **Método:** `POST`
+- **Descripción:** Actualizamos la contraseña del usuario y le notificamos por correo electronico.
+- **JSON de Ejemplo:**
+- **Necesidades:** Token Bearer
+
+  ```json
+    {
+        "email": "manueldiarciaz@gmail.com"
+    }
+
+
+  ```
 
 ## Endpoints del Administrador
 
