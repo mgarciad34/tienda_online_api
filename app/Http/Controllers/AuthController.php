@@ -117,27 +117,21 @@ class AuthController extends Controller
 
     public function recuperarCorreo(Request $request)
     {
-        // Validamos que el correo sea válido
         $request->validate([
             'email' => 'required|email'
         ]);
 
-        // Obtenemos el email del request
         $correoDestino = $request->input('email');
 
-        // Buscamos al usuario por el correo
         $usuario = User::where('email', $correoDestino)->first();
 
-        // Si el usuario no existe, retornamos un error
         if (!$usuario) {
             return response()->json(['status' => 'error', 'message' => 'Usuario no encontrado.'], 404);
         }
 
-        // Generamos una nueva contraseña temporal y la encriptamos
         $nuevaContrasena = "123456";
         $usuario->contrasena = bcrypt($nuevaContrasena);
 
-        // Guardamos la nueva contraseña en el modelo
         $usuario->save();
 
         try {
