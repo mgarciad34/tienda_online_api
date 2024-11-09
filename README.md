@@ -20,6 +20,21 @@ En el rol del usuario se pueden realizar las siguientes acciones:
 
 Luego tambien tenemos funcionalidades comunes como es el caso del login, y otras mas como el registro de nuevos usuarios, y la recuperación  de contraseña.
 
+## Instalacion del proyecto
+Para realizar la instalacion de las dependencias del proyecto es necesario ejecutar el siguiente comando:
+
+`composer install`
+
+Una vez ejecutado este comando ya podemos realizar la ejecucion de las migrations y seeders, con los siguientes comandos:
+
+`php artisan migrate`
+
+`php artisan db:seed`
+
+Una vez realizado todo esto ya podemos ejecutar nuestra API REST con el siguiente comando:
+
+`php artisan serve`
+
 ## Endpoints Comunes
 
 ### Login
