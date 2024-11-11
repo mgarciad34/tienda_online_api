@@ -27,6 +27,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'fncLogout']);
 });
 
+Route::post('/recuperar', [AuthController::class, 'recuperarCorreo']);
+
 //Rutas Administrador
 Route::group(['prefix' => '/admin', 'middleware' => ['auth:sanctum', 'admin']], function () {
     Route::post('/categorias', [AdminCategoriasController::class, 'crearCategoria']);
