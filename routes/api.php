@@ -9,6 +9,7 @@ use App\Http\Controllers\UserCestasController;
 use App\Http\Controllers\UserDetallesCesta;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RecomendacionesController;
+use App\Http\Controllers\UsuariosController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -48,6 +49,8 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth:sanctum', 'admin']], 
 
 //Rutas usuario
 Route::group(['prefix' => '/usuario', 'middleware' => ['auth:sanctum', 'usuario']], function () {
+    Route::put('/actualizar/{id}', [UsuariosController::class, 'actualizarUsuario']);
+
     Route::get('/productos', [ProductosController::class, 'obtenerProductos']);
     Route::get('/productos/{id}', [ProductosController::class, 'obtenerProductosId']);
 
