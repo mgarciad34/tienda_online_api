@@ -1,36 +1,77 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+namespace App\Models;
 
-return new class extends Migration
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+
+/**
+ * Class Producto
+ *
+ * @property int $id
+ * @property string $nombre
+ * @property string $img1
+ * @property string $img2
+ * @property string $img3
+ * @property string $descripcion
+ * @property float $precio
+ * @property int $existencias
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property int $categoria_id
+ *
+ * @property Categoria $categoria
+ * @property Collection|CestaDetalle[] $cesta_detalles
+ *
+ * @package App\Models
+ */
+class Producto extends Model
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    protected $table = 'productos';
+
+    protected $casts = [
+        'precio' => 'float',
+        'existencias' => 'int',
+        'categoria_id' => 'int',
+        'img1' => 'string',
+        'img2' => 'string',
+        'img3' => 'string',
+    ];
+
+    protected $fillable = [
+        'nombre',
+        'img1',
+        'img2',
+        'img3',
+        'descripcion',
+        'precio',
+        'existencias',
+        'categoria_id'
+    ];
+
+    public function toArray(): array
     {
-        Schema::create('productos', function (Blueprint $table) {
-            $table->id();
-            $table->string('nombre');
-            $table->binary('img1');
-            $table->binary('img2');
-            $table->binary('img3');
-            $table->string('descripcion');
-            $table->double('precio');
-            $table->integer('existencias');
-            $table->timestamps();
-            $table->unsignedBigInteger('categoria_id');
-            $table->foreign('categoria_id')->references('id')->on('categorias')->onDelete('cascade');
-        });
+        return [
+            'id' => $this->id,
+            'nombre' => $this->nombre,
+            'descripcion' => $this->descripcion,
+            'precio' => $this->precio,
+            'existencias' => $this->existencias,
+            'categoria_id' => $this->categoria_id,
+            'img1' => $this->img1,
+            'img2' => $this->img2,
+            'img3' => $this->img3,
+        ];
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function categoria()
     {
-        Schema::dropIfExists('productos');
+        return $this->belongsTo(Categoria::class);
     }
-};
+
+    public function cesta_detalles()
+    {
+        return $this->hasMany(CestaDetalle::class);
+    }
+}
