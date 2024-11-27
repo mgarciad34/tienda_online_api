@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use Carbon\Carbon;
@@ -32,12 +28,15 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Producto extends Model
 {
-	protected $table = 'productos';
+    protected $table = 'productos';
 
     protected $casts = [
         'precio' => 'float',
-        'existencias' => 'int',
-        'categoria_id' => 'int'
+        'existencias' => 'integer',
+        'categoria_id' => 'integer',
+        'img1' => 'string',  // Cambiado de 'longtext' a 'string'
+        'img2' => 'string',  // Cambiado de 'longtext' a 'string'
+        'img3' => 'string',  // Cambiado de 'longtext' a 'string'
     ];
 
     protected $fillable = [
@@ -50,14 +49,30 @@ class Producto extends Model
         'existencias',
         'categoria_id'
     ];
-	public function categoria()
-	{
-		return $this->belongsTo(Categoria::class);
-	}
 
-	public function cesta_detalles()
-	{
-		return $this->hasMany(CestaDetalle::class);
-	}
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'nombre' => $this->nombre,
+            'descripcion' => $this->descripcion,
+            'precio' => $this->precio,
+            'existencias' => $this->existencias,
+            'categoria_id' => $this->categoria_id,
+            'img1' => $this->img1,
+            'img2' => $this->img2,
+            'img3' => $this->img3,
+        ];
+    }
 
+    public function categoria()
+    {
+        return $this->belongsTo(Categoria::class);
+    }
+
+    public function cesta_detalles()
+    {
+        return $this->hasMany(CestaDetalle::class);
+    }
 }
+
