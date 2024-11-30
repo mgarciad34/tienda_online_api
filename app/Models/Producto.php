@@ -34,9 +34,9 @@ class Producto extends Model
         'precio' => 'float',
         'existencias' => 'integer',
         'categoria_id' => 'integer',
-        'img1' => 'string',  // Cambiado de 'longtext' a 'string'
-        'img2' => 'string',  // Cambiado de 'longtext' a 'string'
-        'img3' => 'string',  // Cambiado de 'longtext' a 'string'
+        'img1' => 'string',
+        'img2' => 'string',
+        'img3' => 'string',
     ];
 
     protected $fillable = [
