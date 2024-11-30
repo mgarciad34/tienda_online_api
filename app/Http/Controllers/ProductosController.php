@@ -18,7 +18,7 @@ class ProductosController extends Controller
     $request->validate([
         'nombre' => 'required|string|max:255',
         'descripcion' => 'required|string',
-        'precio' => 'required|numeric',
+        'precio' => 'required|numeric|min:0|gt:0',
         'existencias' => 'required|integer',
         'categoria_id' => 'required|integer',
         'img1' => 'required|string',
@@ -111,7 +111,7 @@ class ProductosController extends Controller
                 'img2' => 'nullable|string',
                 'img3' => 'nullable|string',
                 'descripcion' => 'sometimes|string|max:1000',
-                'precio' => 'sometimes|numeric',
+                'precio' => 'sometimes|numeric|min:0|gt:0',
                 'existencias' => 'sometimes|integer|min:0',
                 'categoria_id' => 'sometimes|integer|exists:categorias,id'
             ]);
