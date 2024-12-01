@@ -53,6 +53,7 @@ Route::group(['prefix' => '/usuario', 'middleware' => ['auth:sanctum', 'usuario'
 
     Route::get('/productos', [ProductosController::class, 'obtenerProductos']);
     Route::get('/productos/{id}', [ProductosController::class, 'obtenerProductosId']);
+    Route::get('/obtener/{id}', [AuthController::class, 'obtenerUsuario']);
 
     Route::post('/anadir/cesta',[UserCestasController::class, 'anadirCesta']);
     Route::put('/cerrar/cesta/{id}', [UserCestasController::class, 'cerrarCesta']);

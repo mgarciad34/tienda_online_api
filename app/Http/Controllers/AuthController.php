@@ -74,6 +74,18 @@ class AuthController extends Controller
         }
     }
 
+    public function obtenerUsuario($id)
+    {
+        $usuario = User::find($id);
+
+        if (!$usuario) {
+            return response()->json(['error' => 'Usuario no encontrado'], 404);
+        }
+
+        return response()->json([
+            'usuario' => [ $usuario]
+        ], 200);
+    }
 
     public function fncLogin(Request $request)
     {
@@ -107,6 +119,7 @@ class AuthController extends Controller
                     'message' => 'Usuario autenticado como usuario',
                     'token' => $token,
                     'correo' => $usuario->email,
+                    'id' => $usuario->id,
                     'rol' => 'Usuario'
                 ], 200);
             }
