@@ -15,10 +15,15 @@ return new class extends Migration
     {
         Schema::create('productos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('categoria_id');
+            $table->string('nombre');
+            $table->binary('img1');
+            $table->binary('img2');
+            $table->binary('img3');
+            $table->string('descripcion');
+            $table->double('precio');
+            $table->integer('existencias');
             $table->timestamps();
-            $table->decimal('precio', 10, 2);
-            $table->enum('estado', ['disponible', 'agotado'])->default('disponible');
+            $table->unsignedBigInteger('categoria_id');
             $table->foreign('categoria_id')->references('id')->on('categorias')->onDelete('cascade');
         });
     }
