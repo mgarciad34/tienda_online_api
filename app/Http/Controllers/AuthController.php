@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\PersonalAccessToken;
 use App\Http\Controllers\UserCestasController;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Log;
 class AuthController extends Controller
 {
 
@@ -23,19 +22,18 @@ class AuthController extends Controller
 
     public function fncCrearUsuario(Request $request)
     {
-        // Validar los datos de entrada
-        $validator = Validator::make($request->all(), [
-            'nombre' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'contrasena' => 'required|string|min:8',
-            'rol' => 'required|string|in:Administrador,Usuario',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()->first()], 422);
-        }
-
         try {
+            // Validar los datos de entrada
+            $validator = Validator::make($request->all(), [
+                'nombre' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users',
+                'contrasena' => 'required|string|min:8',
+                'rol' => 'required|string|in:Administrador,Usuario',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()->first()], 422);
+            }
             // Crear el usuario
             $usuario = User::create([
                 'nombre' => $request->nombre,
@@ -65,15 +63,32 @@ class AuthController extends Controller
             }
 
             // Llamar al método del controlador para crear la cesta
-            $this->cestasController->anadirCesta(new Request($cestaData));
+            $result = $this->cestasController->anadirCesta(new Request($cestaData));
 
-            return response()->json(['message' => 'Usuario creado con éxito', 'usuario' => $usuario], 201);
+            // Verificar si se creó correctamente la cesta
+            if ($result) {
+                return response()->json(['message' => 'Usuario creado con éxito y cesta asociada', 'usuario' => $usuario], 201);
+            } else {
+                return response()->json(['error' => 'Error al crear la cesta asociada'], 422);
+            }
         } catch (\Exception $e) {
-            // Manejar errores durante la creación
             return response()->json(['error' => 'Error al crear usuario o cesta: ' . $e->getMessage()], 422);
         }
     }
 
+
+    public function obtenerUsuario($id)
+    {
+        $usuario = User::find($id);
+
+        if (!$usuario) {
+            return response()->json(['error' => 'Usuario no encontrado'], 404);
+        }
+
+        return response()->json([
+            'usuario' => [$usuario]
+        ], 200);
+    }
 
     public function fncLogin(Request $request)
     {
@@ -107,6 +122,7 @@ class AuthController extends Controller
                     'message' => 'Usuario autenticado como usuario',
                     'token' => $token,
                     'correo' => $usuario->email,
+                    'id' => $usuario->id,
                     'rol' => 'Usuario'
                 ], 200);
             }

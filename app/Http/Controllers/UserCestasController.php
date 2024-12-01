@@ -49,6 +49,7 @@ class UserCestasController extends Controller
         try {
             $carritoAbierto = Cesta::where('usuario_id', $usuarioId)
                 ->where('estado', 'abierta')
+                ->orderBy('id', 'desc')
                 ->first();
 
             if ($carritoAbierto == null) {

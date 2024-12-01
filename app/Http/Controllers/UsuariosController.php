@@ -4,46 +4,64 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use Log;
+use Illuminate\Support\Facades\Validator;
 
 class UsuariosController extends Controller
 {
     public function actualizarUsuario(Request $request, $id)
     {
 
+
+        // Validar que el usuario existe y tenga permisos para actualizar
+        $validator = Validator::make($request->all(), [
+            'nombre' => 'nullable|string|max:255',
+            'email' => 'nullable|string|email|max:255|unique:users,email,' . $id,
+            'contrasena' => 'nullable|string|min:8',
+            'rol' => 'nullable|string|in:Administrador,Usuario',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()->first()], 422);
+        }
+
         try {
-            $data = $request->all();
+            // Obtener el usuario existente
+            $usuario = User::findOrFail($id);
 
-            $usuario = User::find($id);
+            // Actualizar los campos del usuario individualmente
+            $actualizado = false;
 
-            if (!$usuario) {
-                Log::error('Usuario no encontrado', ['id' => $id]);
-                return response()->json([
-                    'message' => 'El usuario no fue encontrado',
-                    'status' => 404
-                ], 404);
+            if ($request->nombre) {
+                $usuario->nombre = $request->nombre;
+                $actualizado = true;
             }
 
-            $actualizado = $usuario->update(array_filter($data));
+            if ($request->email) {
+                $usuario->email = $request->email;
+                $actualizado = true;
+            }
+
+            if ($request->contrasena) {
+                $usuario->contrasena = bcrypt($request->contrasena);
+                $actualizado = true;
+            }
+
+            if ($request->rol) {
+                $usuario->rol = $request->rol;
+                $actualizado = true;
+            }
 
             if ($actualizado) {
-                return response()->json([
-                    'message' => 'El usuario fue actualizado exitosamente',
-                    'status' => 200,
-                    'data' => $usuario
-                ], 200);
+                $usuario->updated_at = now();
+                $usuario->save();
+
+
+                return response()->json(['message' => 'Usuario actualizado con éxito', 'usuario' => $usuario], 200);
             } else {
-                return response()->json([
-                    'message' => 'Error al actualizar el usuario',
-                    'status' => 500
-                ], 500);
+                return response()->json(['error' => 'No se realizaron cambios en el usuario'], 400);
             }
         } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Ocurrió un error inesperado',
-                'status' => 500,
-                'error' => $e->getMessage()
-            ], 500);
+            return response()->json(['error' => 'Error al actualizar usuario: ' . $e->getMessage()], 422);
         }
     }
 }
