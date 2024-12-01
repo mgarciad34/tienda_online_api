@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\PersonalAccessToken;
 use App\Http\Controllers\UserCestasController;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Log;
 class AuthController extends Controller
 {
 
@@ -23,9 +22,6 @@ class AuthController extends Controller
 
     public function fncCrearUsuario(Request $request)
     {
-        // Log inicial
-        Log::info('Inicio de fncCrearUsuario');
-
         try {
             // Validar los datos de entrada
             $validator = Validator::make($request->all(), [
@@ -36,13 +32,8 @@ class AuthController extends Controller
             ]);
 
             if ($validator->fails()) {
-                Log::warning('Validación fallida: ' . $validator->errors()->first());
                 return response()->json(['error' => $validator->errors()->first()], 422);
             }
-
-            // Log antes de crear el usuario
-            Log::info('Preparando datos para crear usuario');
-
             // Crear el usuario
             $usuario = User::create([
                 'nombre' => $request->nombre,
@@ -52,9 +43,6 @@ class AuthController extends Controller
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
-
-            // Log después de crear el usuario
-            Log::info('Usuario creado exitosamente: ' . $usuario->id);
 
             // Crear la cesta asociada al usuario
             $cestaData = [
@@ -71,27 +59,19 @@ class AuthController extends Controller
             ]);
 
             if ($validatorCesta->fails()) {
-                Log::warning('Validación de cesta fallida: ' . $validatorCesta->errors()->first());
                 return response()->json(['error' => 'Validación de cesta fallida: ' . $validatorCesta->errors()->first()], 422);
             }
-
-            // Log antes de llamar a anadirCesta
-            Log::info('Preparando para llamar a anadirCesta');
 
             // Llamar al método del controlador para crear la cesta
             $result = $this->cestasController->anadirCesta(new Request($cestaData));
 
             // Verificar si se creó correctamente la cesta
             if ($result) {
-                Log::info('Cesta creada exitosamente');
                 return response()->json(['message' => 'Usuario creado con éxito y cesta asociada', 'usuario' => $usuario], 201);
             } else {
-                Log::error('Error al crear la cesta asociada');
                 return response()->json(['error' => 'Error al crear la cesta asociada'], 422);
             }
         } catch (\Exception $e) {
-            // Manejar errores durante la creación
-            Log::error('Error al crear usuario o cesta: ' . $e->getMessage());
             return response()->json(['error' => 'Error al crear usuario o cesta: ' . $e->getMessage()], 422);
         }
     }

@@ -4,47 +4,43 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Producto;
-use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\File;
 
 class ProductosController extends Controller
 {
     public function crearProducto(Request $request)
-{
-    Log::info('Solicitud recibida para crear un producto.');
+    {
 
-    // Validar la entrada
-    $request->validate([
-        'nombre' => 'required|string|max:255',
-        'descripcion' => 'required|string',
-        'precio' => 'required|numeric|min:0|gt:0',
-        'existencias' => 'required|integer',
-        'categoria_id' => 'required|integer',
-        'img1' => 'required|string',
-        'img2' => 'required|string',
-        'img3' => 'required|string',
-    ]);
-
-    try {
-        // Crear el producto con las URLs base64 de las imágenes
-        $producto = Producto::create([
-            'nombre' => $request->input('nombre'),
-            'descripcion' => $request->input('descripcion'),
-            'precio' => $request->input('precio'),
-            'existencias' => $request->input('existencias'),
-            'categoria_id' => $request->input('categoria_id'),
-            'img1' => $request->input('img1'),
-            'img2' => $request->input('img2'),
-            'img3' => $request->input('img3'),
+        // Validar la entrada
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'descripcion' => 'required|string',
+            'precio' => 'required|numeric|min:0|gt:0',
+            'existencias' => 'required|integer',
+            'categoria_id' => 'required|integer',
+            'img1' => 'required|string',
+            'img2' => 'required|string',
+            'img3' => 'required|string',
         ]);
 
-        return response()->json(['message' => 'Producto creado exitosamente', 'producto' => $producto], 201);
-    } catch (\Exception $e) {
-        Log::error('Error al crear el producto: ' . $e->getMessage());
-        return response()->json(['message' => 'Error al crear el producto'], 500);
+        try {
+            // Crear el producto con las URLs base64 de las imágenes
+            $producto = Producto::create([
+                'nombre' => $request->input('nombre'),
+                'descripcion' => $request->input('descripcion'),
+                'precio' => $request->input('precio'),
+                'existencias' => $request->input('existencias'),
+                'categoria_id' => $request->input('categoria_id'),
+                'img1' => $request->input('img1'),
+                'img2' => $request->input('img2'),
+                'img3' => $request->input('img3'),
+            ]);
+
+            return response()->json(['message' => 'Producto creado exitosamente', 'producto' => $producto], 201);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error al crear el producto'], 500);
+        }
     }
-}
 
     private function convertToBase64($path)
     {

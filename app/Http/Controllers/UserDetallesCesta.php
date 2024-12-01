@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\CestaDetalle;
+use Illuminate\Support\Facades\DB;
+
 
 class UserDetallesCesta extends Controller
 {
@@ -25,6 +27,36 @@ class UserDetallesCesta extends Controller
             return response()->json(['message' => 'Error al agregar el producto'], 500);
         }
     }
+
+    public function obtenerCestaId($id)
+    {
+        $cestaDetalles = CestaDetalle::where('cesta_id', $id)->get();
+
+        if ($cestaDetalles->isNotEmpty()) {
+            return response()->json(['message' => 'Cesta detalles obtenidos correctamente', 'data' => $cestaDetalles], 200);
+        } else {
+            return response()->json(['message' => 'No se encontraron cesta detalles para la cesta especificada'], 404);
+        }
+    }
+
+    public function obtenerCarritoId($id)
+    {
+        $carrito = DB::table('cesta_detalles')
+            ->join('productos', 'cesta_detalles.producto_id', '=', 'productos.id')
+            ->select(
+                'productos.nombre',
+                'productos.img1',
+                'productos.descripcion',
+                'cesta_detalles.cantidad',
+                'cesta_detalles.subtotal'
+            )
+            ->where('cesta_detalles.cesta_id', $id)
+            ->get();
+
+        return response()->json($carrito);
+    }
+
+
 
     public function actualizarProducto(Request $request, $id)
     {
