@@ -10,8 +10,6 @@ class ProductosController extends Controller
 {
     public function crearProducto(Request $request)
     {
-
-        // Validar la entrada
         $request->validate([
             'nombre' => 'required|string|max:255',
             'descripcion' => 'required|string',
@@ -24,7 +22,6 @@ class ProductosController extends Controller
         ]);
 
         try {
-            // Crear el producto con las URLs base64 de las imágenes
             $producto = Producto::create([
                 'nombre' => $request->input('nombre'),
                 'descripcion' => $request->input('descripcion'),

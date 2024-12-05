@@ -31,7 +31,6 @@ class PaymentController extends Controller
             $usuarioId = $request->input('usuarioId');
             $cestaId = $request->input('cestaId');
 
-            // Validar que usuarioId no es nulo
             if (is_null($usuarioId)) {
                 return response()->json(['error' => 'El usuarioId es requerido'], 400);
             }
