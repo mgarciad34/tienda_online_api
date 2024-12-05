@@ -4,25 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Producto;
-use Illuminate\Support\Facades\Http;
-use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\File;
-
 
 class ProductosController extends Controller
 {
-
     public function crearProducto(Request $request)
     {
-        Log::info('Solicitud recibida para crear un producto.');
-
-        // Validar la entrada (asegurarnos de que las rutas de las imágenes son cadenas)
         $request->validate([
             'nombre' => 'required|string|max:255',
             'descripcion' => 'required|string',
-            'precio' => 'required|numeric',
+            'precio' => 'required|numeric|min:0|gt:0',
             'existencias' => 'required|integer',
             'categoria_id' => 'required|integer',
             'img1' => 'required|string',
@@ -30,32 +21,6 @@ class ProductosController extends Controller
             'img3' => 'required|string',
         ]);
 
-        // Obtener las rutas de las imágenes
-        $img1Path = $request->input('img1');
-        $img2Path = $request->input('img2');
-        $img3Path = $request->input('img3');
-
-        // Verificar si los archivos existen en las rutas proporcionadas
-        if (!File::exists($img1Path) || !File::exists($img2Path) || !File::exists($img3Path)) {
-            return response()->json(['message' => 'Algunas de las imágenes no se encuentran en las rutas proporcionadas'], 400);
-        }
-
-        Log::info('Las rutas de las imágenes son válidas.');
-
-        // Convertir las imágenes a base64
-        try {
-            $img1Base64 = $this->convertToBase64($img1Path);
-            $img2Base64 = $this->convertToBase64($img2Path);
-            $img3Base64 = $this->convertToBase64($img3Path);
-
-            Log::info('Imágenes convertidas a base64.');
-
-        } catch (\Exception $e) {
-            Log::error('Error al convertir las imágenes a base64: ' . $e->getMessage());
-            return response()->json(['message' => 'Error al convertir las imágenes'], 500);
-        }
-
-        // Crear el producto y guardar las imágenes en base64
         try {
             $producto = Producto::create([
                 'nombre' => $request->input('nombre'),
@@ -63,15 +28,14 @@ class ProductosController extends Controller
                 'precio' => $request->input('precio'),
                 'existencias' => $request->input('existencias'),
                 'categoria_id' => $request->input('categoria_id'),
-                'img1' => $img1Base64,
-                'img2' => $img2Base64,
-                'img3' => $img3Base64,
+                'img1' => $request->input('img1'),
+                'img2' => $request->input('img2'),
+                'img3' => $request->input('img3'),
             ]);
 
             return response()->json(['message' => 'Producto creado exitosamente', 'producto' => $producto], 201);
         } catch (\Exception $e) {
-            Log::error('Error al crear el producto: ' . $e->getMessage());
-            return response()->json(['message' => 'Error al crear el producto'], 500);
+            return response()->json(['message' => 'Error al crear el producto', 'error' => $e->getMessage()], 500);
         }
     }
 
@@ -140,7 +104,7 @@ class ProductosController extends Controller
                 'img2' => 'nullable|string',
                 'img3' => 'nullable|string',
                 'descripcion' => 'sometimes|string|max:1000',
-                'precio' => 'sometimes|numeric',
+                'precio' => 'sometimes|numeric|min:0|gt:0',
                 'existencias' => 'sometimes|integer|min:0',
                 'categoria_id' => 'sometimes|integer|exists:categorias,id'
             ]);

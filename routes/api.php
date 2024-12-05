@@ -50,13 +50,20 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth:sanctum', 'admin']], 
 //Rutas usuario
 Route::group(['prefix' => '/usuario', 'middleware' => ['auth:sanctum', 'usuario']], function () {
     Route::put('/actualizar/{id}', [UsuariosController::class, 'actualizarUsuario']);
+    Route::get('/categorias', [AdminCategoriasController::class, 'obtenerCategorias']);
 
     Route::get('/productos', [ProductosController::class, 'obtenerProductos']);
     Route::get('/productos/{id}', [ProductosController::class, 'obtenerProductosId']);
+    Route::get('/obtener/{id}', [AuthController::class, 'obtenerUsuario']);
 
     Route::post('/anadir/cesta',[UserCestasController::class, 'anadirCesta']);
     Route::put('/cerrar/cesta/{id}', [UserCestasController::class, 'cerrarCesta']);
+    Route::get('/cesta/{id}', [UserDetallesCesta::class, 'obtenerCestaId']);
+    Route::get('/carrito/{id}', [UserDetallesCesta::class, 'obtenerCarritoId']);
+
     Route::get('/obtener/estado/cesta/{usuarioId}',[UserCestasController::class, 'obtenerEstadoCesta']);
+    Route::put('/actualizar/cesta/{usuarioId}/{total}', [UserCestasController::class, 'actualizarTotalCesta']);
+
     Route::post('/agregar/producto', [UserDetallesCesta::class, 'insertarProducto']);
     Route::put('/actualizar/producto/{id}', [UserDetallesCesta::class, 'actualizarProducto']);
     Route::delete('/eliminar/producto/{id}', [UserDetallesCesta::class, 'eliminarProducto']);
