@@ -23,7 +23,6 @@ class AuthController extends Controller
     public function fncCrearUsuario(Request $request)
     {
         try {
-            // Validar los datos de entrada
             $validator = Validator::make($request->all(), [
                 'nombre' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users',
@@ -34,7 +33,6 @@ class AuthController extends Controller
             if ($validator->fails()) {
                 return response()->json(['error' => $validator->errors()->first()], 422);
             }
-            // Crear el usuario
             $usuario = User::create([
                 'nombre' => $request->nombre,
                 'email' => $request->email,
@@ -44,14 +42,12 @@ class AuthController extends Controller
                 'updated_at' => now(),
             ]);
 
-            // Crear la cesta asociada al usuario
             $cestaData = [
                 'usuario_id' => $usuario->id,
                 'total' => 0,
                 'estado' => 'abierta'
             ];
 
-            // Validar datos antes de enviar a anadirCesta
             $validatorCesta = Validator::make($cestaData, [
                 'usuario_id' => ['required', 'integer', 'min:1'],
                 'total' => ['required', 'numeric', 'min:0', 'max:10000000'],
@@ -62,10 +58,8 @@ class AuthController extends Controller
                 return response()->json(['error' => 'Validación de cesta fallida: ' . $validatorCesta->errors()->first()], 422);
             }
 
-            // Llamar al método del controlador para crear la cesta
             $result = $this->cestasController->anadirCesta(new Request($cestaData));
 
-            // Verificar si se creó correctamente la cesta
             if ($result) {
                 return response()->json(['message' => 'Usuario creado con éxito y cesta asociada', 'usuario' => $usuario], 201);
             } else {

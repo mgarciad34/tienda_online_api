@@ -8,14 +8,14 @@ use Stripe\PaymentIntent;
 
 class PaymentController extends Controller
 {
-    public function gestionCestas($id)
+    public function gestionCestas($idUsuario, $idCesta)
     {
         $cestas = new UserCestasController();
 
-        $cestas->cerrarCesta($id);
+        $cestas->cerrarCesta($idCesta);
 
         $data = new Request([
-            "usuario_id" => $id,
+            "usuario_id" => $idUsuario,
             "total" => 0,
             "estado" => "abierta"
         ]);
@@ -29,8 +29,8 @@ class PaymentController extends Controller
 
         try {
             $usuarioId = $request->input('usuarioId');
+            $cestaId = $request->input('cestaId');
 
-            // Validar que usuarioId no es nulo
             if (is_null($usuarioId)) {
                 return response()->json(['error' => 'El usuarioId es requerido'], 400);
             }
@@ -42,7 +42,7 @@ class PaymentController extends Controller
             ]);
 
             if (!empty($paymentIntent->client_secret)) {
-                $this->gestionCestas($usuarioId);
+                $this->gestionCestas($usuarioId, $cestaId);
             }
 
             return response()->json([

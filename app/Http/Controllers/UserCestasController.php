@@ -19,7 +19,6 @@ class UserCestasController extends Controller
 
         try {
             $cesta = Cesta::create($validatedData);
-
             return response()->json(['message' => 'Cesta created successfully', 'data' => $cesta], 201);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Failed to create Cesta: ' . $e->getMessage()], 422);
@@ -32,7 +31,6 @@ class UserCestasController extends Controller
             $cesta = Cesta::findOrFail($id);
             $cesta->estado = 'cerrada';
             $cesta->save();
-
 
             return response()->json([
                 'message' => 'La cesta ha sido cerrada con éxito',
@@ -76,37 +74,6 @@ class UserCestasController extends Controller
         }
     }
 
-    public function obtenerHistorialCesta(int $usuarioId)
-    {
-        try {
-            // Ejecuta la consulta para obtener el total y el updated_at del carrito cerrado
-            $carrito = DB::table('cestas')
-                ->where('usuario_id', $usuarioId)
-                ->where('estado', 'cerrada')
-                ->select('total', 'updated_at') // Selecciona los campos 'total' y 'updated_at'
-                ->first(); // Obtiene el primer registro coincidente
-
-            // Si no se encuentra un carrito, retorna 0
-            if ($carrito === null) {
-                return response()->json([
-                    'data' => 0
-                ], 200);
-            } else {
-                return response()->json([
-                    'message' => 'Carrito abierto encontrado con éxito',
-                    'data' => [
-                        'total' => $carrito->total,
-                        'updated_at' => $carrito->updated_at
-                    ]
-                ], 200);
-            }
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Error al intentar obtener el estado del carrito: ' . $e->getMessage()
-            ], 500);
-        }
-    }
-
     public function actualizarTotalCesta(int $usuarioId, float $nuevoTotal)
     {
         try {
@@ -121,7 +88,6 @@ class UserCestasController extends Controller
                 ], 404);
             }
 
-            // Asegurarse de que $nuevoTotal es un número flotante
             $nuevoTotalFloat = floatval($nuevoTotal);
 
             DB::table('cestas')

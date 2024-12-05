@@ -10,9 +10,6 @@ class UsuariosController extends Controller
 {
     public function actualizarUsuario(Request $request, $id)
     {
-
-
-        // Validar que el usuario existe y tenga permisos para actualizar
         $validator = Validator::make($request->all(), [
             'nombre' => 'nullable|string|max:255',
             'email' => 'nullable|string|email|max:255|unique:users,email,' . $id,
@@ -25,10 +22,7 @@ class UsuariosController extends Controller
         }
 
         try {
-            // Obtener el usuario existente
             $usuario = User::findOrFail($id);
-
-            // Actualizar los campos del usuario individualmente
             $actualizado = false;
 
             if ($request->nombre) {
@@ -54,7 +48,6 @@ class UsuariosController extends Controller
             if ($actualizado) {
                 $usuario->updated_at = now();
                 $usuario->save();
-
 
                 return response()->json(['message' => 'Usuario actualizado con éxito', 'usuario' => $usuario], 200);
             } else {

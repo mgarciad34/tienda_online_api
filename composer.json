@@ -15,6 +15,7 @@
         "stripe/stripe-php": "^16.2"
     },
     "require-dev": {
+        "asvae/laravel-api-tester": "^2.0",
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",

@@ -62,7 +62,6 @@ Route::group(['prefix' => '/usuario', 'middleware' => ['auth:sanctum', 'usuario'
     Route::get('/carrito/{id}', [UserDetallesCesta::class, 'obtenerCarritoId']);
 
     Route::get('/obtener/estado/cesta/{usuarioId}',[UserCestasController::class, 'obtenerEstadoCesta']);
-    Route::get('/obtener/historial/{usuarioId}',[UserCestasController::class, 'obtenerHistorialCesta']);
     Route::put('/actualizar/cesta/{usuarioId}/{total}', [UserCestasController::class, 'actualizarTotalCesta']);
 
     Route::post('/agregar/producto', [UserDetallesCesta::class, 'insertarProducto']);

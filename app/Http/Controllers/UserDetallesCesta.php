@@ -70,7 +70,6 @@ class UserDetallesCesta extends Controller
         ]);
 
         try {
-            // Validar los datos de entrada
             $validatedData = $request->validate([
                 'cesta_id' => 'required|exists:cestas,id',
                 'producto_id' => 'required|exists:productos,id',
@@ -79,12 +78,12 @@ class UserDetallesCesta extends Controller
                 'subtotal' => 'required|numeric|min:0',
             ]);
 
-            $existingEntry = CestaDetalle::where('cesta_id', $validatedData['cesta_id'])
+            $consultaDatos = CestaDetalle::where('cesta_id', $validatedData['cesta_id'])
                              ->where('producto_id', $validatedData['producto_id'])
-                             ->where('id', '!=', $id) // Excluir el registro actual
+                             ->where('id', '!=', $id)
                              ->exists();
 
-            if ($existingEntry) {
+            if ($consultaDatos) {
                 Log::warning("Intento de actualización de un producto que ya existe en la cesta", [
                     'cesta_id' => $validatedData['cesta_id'],
                     'producto_id' => $validatedData['producto_id'],
@@ -94,8 +93,6 @@ class UserDetallesCesta extends Controller
                     'error' => 'Este producto ya está en la cesta',
                 ]);
             }
-
-            // Actualizar el registro usando Eloquent
             $cestaDetalle = CestaDetalle::findOrFail($id);
 
             $cestaDetalle->update([
@@ -149,7 +146,4 @@ class UserDetallesCesta extends Controller
             return response()->json(['message' => 'Error al eliminar la cesta detalle'], 500);
         }
     }
-
-
-
 }
